@@ -1,0 +1,1 @@
+gcc estructura.c process_map_file.c map_utils.c map_utils_2.c -L./src/printf -lftprintf -L./src/libft -lft
