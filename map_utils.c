@@ -10,8 +10,12 @@ void check_argc(int argc)
 }
 int check_line(char *buffer, int *i, map *c)
 {
-    buffer[*i] = '\0';
+	static int e;
+	buffer[*i] = '\0';
     map_validator(buffer, c);
+	c->mapstruct[e] = (char*)malloc(sizeof(char) * BUFFER_SIZE);
+	ft_strlcpy(c->mapstruct[e], buffer, ft_strlen(buffer) + 1);
+	e++;
     *i = 0;
     return 0;
 }

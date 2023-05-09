@@ -21,6 +21,10 @@ typedef struct{
 	int startp;
 	int	zeros;
 	int ones;
+	char *mapstruct[20];
+	void *mlx;
+	void *mlx_win;
+	void *img_ptr;
 }map;
 
 /*FUNCIONES PRINTF*/
@@ -42,6 +46,8 @@ int first_line_analyzer(char *buffer, map *c);
 int body_line_analyzer(char *buffer, map *c);
 int last_line_analyzer(char *buffer, map *c);
 int search_items(char item, map *c);
+/*FUNCIONES DE GESTION DE GRÁFICOS*/
+int	mlx_process(map *c);
 /*FUNCIONES DE GESTIÓN DE ERRORES*/
 void perror(const char *s);
 char *strerror(int errnum);

@@ -76,10 +76,9 @@ int map_validator(char *buffer, map *c)
 int process_line(int fd, map *c)
 {
     char buffer[BUFFER_SIZE];
-	int	columns;
     ssize_t bytes_read;
 	int i;
-	
+
 	i = 0;
     while ((bytes_read = read(fd, &buffer[i], 1)) > 0)
     {
@@ -104,9 +103,11 @@ int process_map_file(int argc, char **argv, map *c)
 	c->lines = line_counter(fd);
 	close(fd);
 	int fd2 = open(c->map_name, O_RDONLY);
+	c->coins = 0;
 	c->startp = 0;
 	c->zeros = 0;
 	c->ones = 0;
+	c->exitp = 0;
 	process_line(fd2, c);
 	if (c->coins < 1 || c->exitp != 1 || c->startp != 1)
 	{
