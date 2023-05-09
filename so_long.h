@@ -25,6 +25,8 @@ typedef struct{
 	void *mlx;
 	void *mlx_win;
 	void *img_ptr;
+	int width;
+	int height;
 }map;
 
 /*FUNCIONES PRINTF*/
