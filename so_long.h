@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #define BUFFER_SIZE 5000
-
+#define BPP 64
 // STRUCTS
 typedef struct{
 	char *map_name;
@@ -28,12 +28,14 @@ typedef struct{
 	void *floor_ptr;
 	void *exit_ptr;
 	void *coin_ptr;
+	void *player_ptr;
 	int width;
 	int height;
 	int xs;
 	int ys;
+	int player_x;
+	int	player_y;
 }map;
-
 /*FUNCIONES PRINTF*/
 int	ft_printf(const char *fmt, ...);
 /*FUNCIONES LIBFT*/
@@ -56,7 +58,8 @@ int search_items(char item, map *c);
 /*FUNCIONES DE GESTION DE GRÁFICOS*/
 int	mlx_process(map *c);
 void put_imgs(map *c);
-void put_item(map *c, int i, int j);
+void put_item(map *c, int y, int x);
+int key_hook(int keycode, map *c);
 /*FUNCIONES DE GESTIÓN DE ERRORES*/
 void perror(const char *s);
 char *strerror(int errnum);
