@@ -13,8 +13,9 @@ int check_line(char *buffer, int *i, map *c)
 	static int e;
 	buffer[*i] = '\0';
     map_validator(buffer, c);
-	c->mapstruct[e] = (char*)malloc(sizeof(char) * BUFFER_SIZE);
+	c->mapstruct[e] = (char *)malloc(sizeof(char) * ft_strlen(buffer) + 1);
 	ft_strlcpy(c->mapstruct[e], buffer, ft_strlen(buffer) + 1);
+	ft_printf("%s\n", c->mapstruct[e]);
 	e++;
     *i = 0;
     return 0;

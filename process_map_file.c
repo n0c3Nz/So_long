@@ -42,7 +42,7 @@ int line_counter(int fd)
         perror("Error al leer el archivo");
         exit(1);
     }
-	if(line < 3)
+	if (line < 2)
 	{
 		perror("Número de líneas insuficientes");
 		exit(1);

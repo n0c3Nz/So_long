@@ -9,7 +9,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <errno.h>
-#define BUFFER_SIZE 200
+#define BUFFER_SIZE 5000
 
 // STRUCTS
 typedef struct{
@@ -21,12 +21,17 @@ typedef struct{
 	int startp;
 	int	zeros;
 	int ones;
-	char *mapstruct[20];
+	char *mapstruct[BUFFER_SIZE];
 	void *mlx;
 	void *mlx_win;
-	void *img_ptr;
+	void *wall_ptr;
+	void *floor_ptr;
+	void *exit_ptr;
+	void *coin_ptr;
 	int width;
 	int height;
+	int xs;
+	int ys;
 }map;
 
 /*FUNCIONES PRINTF*/
@@ -50,6 +55,8 @@ int last_line_analyzer(char *buffer, map *c);
 int search_items(char item, map *c);
 /*FUNCIONES DE GESTION DE GRÁFICOS*/
 int	mlx_process(map *c);
+void put_imgs(map *c);
+void put_item(map *c, int i, int j);
 /*FUNCIONES DE GESTIÓN DE ERRORES*/
 void perror(const char *s);
 char *strerror(int errnum);
