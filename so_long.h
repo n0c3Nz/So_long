@@ -31,10 +31,10 @@ typedef struct{
 	void *player_ptr;
 	int width;
 	int height;
-	int xs;
-	int ys;
 	int player_x;
 	int	player_y;
+	int moves;
+	int coins_gained;
 }map;
 /*FUNCIONES PRINTF*/
 int	ft_printf(const char *fmt, ...);
@@ -60,6 +60,12 @@ int	mlx_process(map *c);
 void put_imgs(map *c);
 void put_item(map *c, int y, int x);
 int key_hook(int keycode, map *c);
+/*FUNCIONES DE GESTION DE MOVIMIENTOS*/
+int move_up(map *c);
+int move_down(map *c);
+int move_right(map *c);
+int move_left(map *c);
+int check_e(map *c);
 /*FUNCIONES DE GESTIÓN DE ERRORES*/
 void perror(const char *s);
 char *strerror(int errnum);

@@ -2,7 +2,9 @@
 
 int main()
 {
-    void *mlx_ptr = mlx_init();
+	int endian;
+	char *img_data;
+	void *mlx_ptr = mlx_init();
     if (!mlx_ptr) { return 1; }
     void *win_ptr = mlx_new_window(mlx_ptr, 800, 800, "Mi ventana");
 
@@ -21,7 +23,8 @@ int main()
     mlx_put_image_to_window(mlx_ptr, win_ptr, img_ptr, 10, 10);
     mlx_put_image_to_window(mlx_ptr, win_ptr, img_ptr, 10, 20);
     mlx_put_image_to_window(mlx_ptr, win_ptr, img_ptr, 10, 30);
-
-    // Iniciar el bucle principal
+	img_data = mlx_get_data_addr(img_ptr, &width, &height, &endian);
+    ft_printf("%s", img_data);
+	// Iniciar el bucle principal
     mlx_loop(mlx_ptr);
 }
