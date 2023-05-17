@@ -3,11 +3,11 @@
 #define ROWS 5
 #define COLS 5
 
-char mapstruct[ROWS][COLS] = {
+char map[ROWS][COLS] = {
     "11111",
-    "1E101",
+    "1P101",
     "10101",
-    "1P001",
+    "100E1",
     "11111"
 };
 
@@ -18,12 +18,12 @@ int dfs(int row, int col, int visited[ROWS][COLS]) {
     }
 
     // Verificar si hemos llegado al punto 'E'
-    if (mapstruct[row][col] == 'E') {
+    if (map[row][col] == 'E') {
         return 1;
     }
 
     // Verificar si el punto actual es transitable ('0' o 'P') y no ha sido visitado
-    if ((mapstruct[row][col] == '0' || mapstruct[row][col] == 'P') && !visited[row][col]) {
+    if ((map[row][col] == '0' || map[row][col] == 'P') && !visited[row][col]) {
         // Marcar el punto actual como visitado
         visited[row][col] = 1;
 
@@ -40,7 +40,7 @@ int dfs(int row, int col, int visited[ROWS][COLS]) {
 }
 
 int main() {
-    int startRow = 3;  // Fila del punto 'P'
+    int startRow = 1;  // Fila del punto 'P'
     int startCol = 1;  // Columna del punto 'P'
 
     int visited[ROWS][COLS] = {0};  // Inicializar matriz de visitados
@@ -55,5 +55,6 @@ int main() {
 
     return 0;
 }
+
 
 // ESTE SISTEMA DFS trata de encontrar E desde P.

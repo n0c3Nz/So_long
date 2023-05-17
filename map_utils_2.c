@@ -24,7 +24,7 @@ int path_finder(map *c)
 {
 	int visited[c->lines][c->columns];
 	ft_memset(visited, 0, sizeof(visited));
-	int pathExists = dfs(c->player_y, c->player_x, visited, c );
+	int pathExists = dfs(c->player_y, c->player_x, c->lines, c->columns, visited, c );
     if (pathExists) {
         printf("Hay un camino posible desde 'P' a 'E'.\n");
     } else {
@@ -33,23 +33,25 @@ int path_finder(map *c)
 
     return 0;
 }
-int dfs(int row, int col, int visited[7][7], map *c)
+int dfs(int row, int col, int max_row, int max_col, int visited[max_row][max_col], map *c)
 {
     // Verificar si estamos fuera de los límites del mapa
-    if (row < 0 || row >= c->lines || col < 0 || col >= c->columns)
+    ft_printf("\nNúmero de lineas: %i\nNúmero de columnas: %i\n", max_row, max_col);
+	if (row < 0 || row >= c->lines || col < 0 || col >= c->columns)
         return 0;
     // Verificar si hemos llegado al punto 'E'
     if (c->mapstruct[row][col] == 'E')
         return 1;
     // Verificar si el punto actual es transitable ('0' o 'P') y no ha sido visitado
-    if ((c->mapstruct[row][col] == '0' || c->mapstruct[row][col] == 'C' || c->mapstruct[row][col] == 'P') && !visited[row][col]) {
+    if ((c->mapstruct[row][col] == '0' || c->mapstruct[row][col] == 'C' || c->mapstruct[row][col] == 'P') && visited[row][col] != '1') {
         // Marcar el punto actual como visitado
         visited[row][col] = 1;
+
         // Llamar recursivamente a DFS en los vecinos
-        if (dfs(row - 1, col, visited, c) ||
-            dfs(row + 1, col, visited, c) ||
-            dfs(row, col - 1, visited, c) ||
-            dfs(row, col + 1, visited, c)) {
+        if (dfs(row - 1, col, max_row, max_col, visited, c) ||
+            dfs(row + 1, col, max_row, max_col, visited, c) ||
+            dfs(row, col - 1, max_row, max_col, visited, c) ||
+            dfs(row, col + 1, max_row, max_col, visited, c)) {
             return 1;
         }
     }
