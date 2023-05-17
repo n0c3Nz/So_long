@@ -31,10 +31,12 @@ typedef struct{
 	void *player_ptr;
 	int width;
 	int height;
+	void *player_img;
 	int player_x;
 	int	player_y;
 	int moves;
 	int coins_gained;
+	int endian;
 }map;
 /*FUNCIONES PRINTF*/
 int	ft_printf(const char *fmt, ...);
@@ -55,6 +57,7 @@ int first_line_analyzer(char *buffer, map *c);
 int body_line_analyzer(char *buffer, map *c);
 int last_line_analyzer(char *buffer, map *c);
 int search_items(char item, map *c);
+int path_finder(map *c);
 /*FUNCIONES DE GESTION DE GRÁFICOS*/
 int	mlx_process(map *c);
 void put_imgs(map *c);

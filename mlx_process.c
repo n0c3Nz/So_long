@@ -7,6 +7,7 @@ int mlx_process(map *c)
 	c->exit_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/exit.xpm", &c->width, &c->height);
 	c->coin_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/coin.xpm", &c->width, &c->height);
 	c->player_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/p_stand.xpm", &c->width, &c->height);
+	c->player_img = mlx_get_data_addr(c->player_ptr, &c->width, &c->height, &c->endian);
 	c->moves = 0;
 	c->coins_gained = 0;
 	put_imgs(c);

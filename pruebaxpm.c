@@ -24,7 +24,11 @@ int main()
     mlx_put_image_to_window(mlx_ptr, win_ptr, img_ptr, 10, 20);
     mlx_put_image_to_window(mlx_ptr, win_ptr, img_ptr, 10, 30);
 	img_data = mlx_get_data_addr(img_ptr, &width, &height, &endian);
-    ft_printf("%s", img_data);
+	int i = 0;
+	while (i < 5)
+	{
+		
+	}
 	// Iniciar el bucle principal
     mlx_loop(mlx_ptr);
 }

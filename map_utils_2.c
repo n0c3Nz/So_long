@@ -20,3 +20,8 @@ int last_line_analyzer(char *buffer, map *c)
 	}
 	return(0);
 }
+int path_finder(map *c)
+{
+	ft_printf("\nEntra por aqui\n");
+	return(0);
+}
