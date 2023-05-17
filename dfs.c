@@ -3,10 +3,10 @@
 #define ROWS 5
 #define COLS 5
 
-char map[ROWS][COLS] = {
+char mapstruct[ROWS][COLS] = {
     "11111",
-    "100E1",
-    "10001",
+    "1E101",
+    "10101",
     "1P001",
     "11111"
 };
@@ -18,12 +18,12 @@ int dfs(int row, int col, int visited[ROWS][COLS]) {
     }
 
     // Verificar si hemos llegado al punto 'E'
-    if (map[row][col] == 'E') {
+    if (mapstruct[row][col] == 'E') {
         return 1;
     }
 
-    // Verificar si el punto actual es transitable ('0') y no ha sido visitado
-    if (map[row][col] == '0' && !visited[row][col]) {
+    // Verificar si el punto actual es transitable ('0' o 'P') y no ha sido visitado
+    if ((mapstruct[row][col] == '0' || mapstruct[row][col] == 'P') && !visited[row][col]) {
         // Marcar el punto actual como visitado
         visited[row][col] = 1;
 
@@ -46,7 +46,7 @@ int main() {
     int visited[ROWS][COLS] = {0};  // Inicializar matriz de visitados
 
     int pathExists = dfs(startRow, startCol, visited);
-
+	printf("\nResultado de la función: %i\n", pathExists);
     if (pathExists) {
         printf("Hay un camino posible desde 'P' a 'E'.\n");
     } else {
@@ -55,3 +55,5 @@ int main() {
 
     return 0;
 }
+
+// ESTE SISTEMA DFS trata de encontrar E desde P.

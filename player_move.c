@@ -7,7 +7,7 @@ int move_up(map *c)
 	{
 		if (c->mapstruct[c->player_y - 1][c->player_x] == 'C')
 			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y - 1][c->player_x] == '0' || c->mapstruct[c->player_y - 1][c->player_x] == 'P' || c->mapstruct[c->player_y - 1][c->player_x] == 'C' || c->mapstruct[c->player_y - 1][c->player_x] == 'E' && c->coins_gained == c->coins)
+		if (c->mapstruct[c->player_y - 1][c->player_x] == '0' || c->mapstruct[c->player_y - 1][c->player_x] == 'P' || c->mapstruct[c->player_y - 1][c->player_x] == 'C' || (c->mapstruct[c->player_y - 1][c->player_x] == 'E' && c->coins_gained == c->coins))
 		{
 			c->mapstruct[c->player_y][c->player_x] = '0';
 			if (c->mapstruct[c->player_y - 1][c->player_x] != 'E')
@@ -31,7 +31,7 @@ int move_down(map *c)
 	{
 		if (c->mapstruct[c->player_y + 1][c->player_x] == 'C')
 			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y + 1][c->player_x] == '0' || c->mapstruct[c->player_y + 1][c->player_x] == 'P' || c->mapstruct[c->player_y + 1][c->player_x] == 'C' || c->mapstruct[c->player_y + 1][c->player_x] == 'E' && c->coins_gained == c->coins)
+		if (c->mapstruct[c->player_y + 1][c->player_x] == '0' || c->mapstruct[c->player_y + 1][c->player_x] == 'P' || c->mapstruct[c->player_y + 1][c->player_x] == 'C' || (c->mapstruct[c->player_y + 1][c->player_x] == 'E' && c->coins_gained == c->coins))
 		{
 			c->mapstruct[c->player_y][c->player_x] = '0';
 			if (c->mapstruct[c->player_y + 1][c->player_x] != 'E')
@@ -42,8 +42,10 @@ int move_down(map *c)
 			c->moves += 1;
 			ft_printf("\n Número de movimientos %i", c->moves);
 			ft_printf("\n Coins %i/%i", c->coins_gained, c->coins);
+			return (0);
 		}
 	}
+	return (1);
 }
 
 int move_right(map *c)
@@ -53,7 +55,7 @@ int move_right(map *c)
 	{
 		if (c->mapstruct[c->player_y][c->player_x + 1] == 'C')
 			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y][c->player_x + 1] == '0' || c->mapstruct[c->player_y][c->player_x + 1] == 'P' || c->mapstruct[c->player_y][c->player_x + 1] == 'C' || c->mapstruct[c->player_y][c->player_x + 1] == 'E' && c->coins_gained == c->coins)
+		if (c->mapstruct[c->player_y][c->player_x + 1] == '0' || c->mapstruct[c->player_y][c->player_x + 1] == 'P' || c->mapstruct[c->player_y][c->player_x + 1] == 'C' || (c->mapstruct[c->player_y][c->player_x + 1] == 'E' && c->coins_gained == c->coins))
 		{
 			c->mapstruct[c->player_y][c->player_x] = '0';
 			if (c->mapstruct[c->player_y][c->player_x + 1] != 'E')
@@ -76,7 +78,7 @@ int move_left(map *c)
 	{
 		if (c->mapstruct[c->player_y][c->player_x - 1] == 'C')
 			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y][c->player_x - 1] == '0' || c->mapstruct[c->player_y][c->player_x - 1] == 'P' || c->mapstruct[c->player_y][c->player_x - 1] == 'C' || c->mapstruct[c->player_y][c->player_x - 1] == 'E' && c->coins_gained == c->coins)
+		if (c->mapstruct[c->player_y][c->player_x - 1] == '0' || c->mapstruct[c->player_y][c->player_x - 1] == 'P' || c->mapstruct[c->player_y][c->player_x - 1] == 'C' || (c->mapstruct[c->player_y][c->player_x - 1] == 'E' && c->coins_gained == c->coins))
 		{
 			c->mapstruct[c->player_y][c->player_x] = '0';
 			if (c->mapstruct[c->player_y][c->player_x - 1] != 'E')

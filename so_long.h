@@ -58,6 +58,7 @@ int body_line_analyzer(char *buffer, map *c);
 int last_line_analyzer(char *buffer, map *c);
 int search_items(char item, map *c);
 int path_finder(map *c);
+int dfs(int row, int col, int visited[7][7], map *c);
 /*FUNCIONES DE GESTION DE GRÁFICOS*/
 int	mlx_process(map *c);
 void put_imgs(map *c);
