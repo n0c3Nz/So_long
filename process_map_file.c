@@ -115,7 +115,9 @@ int process_map_file(int argc, char **argv, map *c)
 		exit(1);
 	}
 	ft_printf("\nColumnas:\t\t%d\nFilas:\t\t\t%d\nCoins:\t\t\t%d\nUnos:\t\t\t%d\nCeros:\t\t\t%d\nPunto de entrada:\t%d\nPunto de salida:\t%d\n", c->columns, c->lines, c->coins, c->ones, c->zeros, c->startp, c->exitp);// DEBUG
-	path_finder(c);
+	ft_printf("\nPosición y: %i\nPosición x: %i\n", c->player_y, c->player_x);
+	if (!path_finder(c))
+		exit(1);
 	close(fd2);
 	return (0);
 }

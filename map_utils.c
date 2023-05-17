@@ -44,7 +44,7 @@ int first_line_analyzer(char *buffer, map *c)
 int body_line_analyzer(char *buffer, map *c)
 {
 	int a;
-	
+	static int e;
 	a = 0;
 	//ft_printf("\nen body_line_analyzer el buffer mide %i y el modelo a seguir %i\n", ft_strlen(buffer), c->columns);
 	if (ft_strlen(buffer) != c->columns || buffer[a] != '1' || buffer[(c->columns - 1)] != '1')
@@ -55,9 +55,15 @@ int body_line_analyzer(char *buffer, map *c)
 	a++;
 	while(a != (c->columns - 1))
 	{
+		if (buffer[a] == 'P')
+		{
+			c->player_y = e + 1;
+			c->player_x = a;
+		}
 		search_items(buffer[a], c);//aqui es ir revisando el cuerpo del mapa e ir añadiendo si hay un coin pues coin++;
 		a++;
 	}
+	e++;
 	return(0);
 }
 int search_items(char item, map *c)

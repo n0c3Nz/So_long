@@ -52,7 +52,17 @@ int main() {
     } else {
         printf("No hay un camino posible desde 'P' a 'E'.\n");
     }
-
+	int i = COLS - 1;
+	int f = ROWS - 1;
+	while (f >= 0) {
+	    while (i >= 0) {
+	        printf("%d", visited[f][i]);
+	        i--;
+	    }
+	    printf("\n");
+	    i = COLS - 1;
+	    f--;
+}
     return 0;
 }
 

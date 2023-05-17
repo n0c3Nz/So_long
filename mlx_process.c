@@ -11,7 +11,7 @@ int mlx_process(map *c)
 	c->moves = 0;
 	c->coins_gained = 0;
 	put_imgs(c);
-	ft_printf("\nPosición y:%i\nPosición x:%i", c->player_y, c->player_x);
+	//ft_printf("\nPosición y:%i\nPosición x:%i", c->player_y, c->player_x);
 	return(0);
 }
 void put_imgs(map *c)
@@ -46,8 +46,8 @@ void put_item(map *c, int y, int x)
 	else if (c->mapstruct[y][x] == 'P')
 	{
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->player_ptr, x * BPP, y * BPP);
-		c->player_x = x;
-		c->player_y = y;
+		//c->player_x = x;
+		//c->player_y = y;
 	}
 }
 
