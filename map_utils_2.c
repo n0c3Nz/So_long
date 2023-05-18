@@ -4,7 +4,7 @@ int last_line_analyzer(char *buffer, map *c)
 {
 	int a;
 	a = 0;
-	if (ft_strlen(buffer) != c->columns)
+	if (ft_strlen(buffer) != (size_t)c->columns)
 	{
 		perror("Mapa inconsistente en la última línea");
 		exit(1);
@@ -37,6 +37,7 @@ int path_finder(map *c)
         printf("\nHay un camino posible desde 'P' a 'E'.\n");
 	else
         printf("\nNo hay un camino posible desde 'P' a 'E'.\n");
+
 	// Liberar la memoria de la matriz
     i = 0;
 	while(i < c->lines){
@@ -70,5 +71,6 @@ int dfs(int row, int col, int **visited, map *c)
             return 1;
         }
     }
+
     return 0;
 }

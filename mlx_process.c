@@ -53,13 +53,14 @@ void put_item(map *c, int y, int x)
 
 int key_hook(int keycode, map *c)
 {
-	if (keycode == 0x61 || keycode == 0x41) // tecla a o A
+	//ft_printf("\n%i\n", keycode);
+	if (keycode == 0x61 || keycode == 0x41 || keycode == 0) // tecla a o A ¡EL ULTIMO ES PARA MAC!.
         move_left(c);
-    else if (keycode == 0x73 || keycode == 0x53) // tecla s o S
+    else if (keycode == 0x73 || keycode == 0x53 || keycode == 1) // tecla s o S
         move_down(c);
-    else if (keycode == 0x64 || keycode == 0x44) // tecla d o D
+    else if (keycode == 0x64 || keycode == 0x44 || keycode == 2) // tecla d o D
         move_right(c);
-    else if (keycode == 0x77 || keycode == 0x57) // tecla w o W
+    else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
 		move_up(c);
 	check_e(c);
 	return (0);

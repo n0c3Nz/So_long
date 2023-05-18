@@ -47,7 +47,7 @@ int body_line_analyzer(char *buffer, map *c)
 	static int e;
 	a = 0;
 	//ft_printf("\nen body_line_analyzer el buffer mide %i y el modelo a seguir %i\n", ft_strlen(buffer), c->columns);
-	if (ft_strlen(buffer) != c->columns || buffer[a] != '1' || buffer[(c->columns - 1)] != '1')
+	if (ft_strlen(buffer) != (size_t)c->columns || buffer[a] != '1' || buffer[(c->columns - 1)] != '1')
 	{
 		perror("mapa inconsistente");
 		exit(1);
