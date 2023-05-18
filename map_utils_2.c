@@ -27,6 +27,7 @@ int path_finder(map *c)
 	
 	i = 0;
 	int **visited = malloc(c->lines * sizeof(int *));
+//  int **visited = (int **)ft_calloc(c->lines, sizeof(int *));
     while(i < c->lines)
 	{
         visited[i] = ft_calloc(c->columns, sizeof(int));
