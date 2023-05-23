@@ -40,6 +40,8 @@ typedef struct{
 	void *player_img;
 	int player_x;
 	int	player_y;
+	int exit_x;
+	int exit_y;
 	int moves;
 	int coins_gained;
 	int endian;
@@ -74,6 +76,7 @@ void free_mapstruct(map *c);
 int loop_hook(map *c);// PROBANDO
 void wall_animation(map *c);
 void coin_animation(map *c);
+void check_coins(map *c);
 /*FUNCIONES DE GESTION DE MOVIMIENTOS*/
 int move_up(map *c);
 int move_down(map *c);

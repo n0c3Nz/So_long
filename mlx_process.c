@@ -45,7 +45,11 @@ void put_item(map *c, int y, int x)
 	else if (c->mapstruct[y][x] == '0')
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, x * BPP, y * BPP);
 	else if (c->mapstruct[y][x] == 'E')
+	{
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->exit_ptr, x * BPP, y * BPP);
+		c->exit_x = x;
+		c->exit_y = y;
+	}
 	else if (c->mapstruct[y][x] == 'C')
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->coin_ptr, x * BPP, y * BPP);
 	else if (c->mapstruct[y][x] == 'P')
@@ -66,6 +70,7 @@ int key_hook(int keycode, map *c)
 		move_right(c);
 	else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
 		move_up(c);
+	check_coins(c);
 	check_e(c);
 	return (0);
 }

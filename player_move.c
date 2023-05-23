@@ -98,6 +98,7 @@ int move_left(map *c)
 int check_e(map *c){
 	if (c->mapstruct[c->player_y][c->player_x] == 'E')
 	{
+		sleep(1);
 		ft_printf("\n¡Has completado el nivel, gracias por jugar!");
 		mlx_destroy_image(c->mlx, c->floor_ptr);
 		mlx_destroy_image(c->mlx, c->wall_ptr);
@@ -120,7 +121,6 @@ int loop_hook(map *c)
 void wall_animation(map *c)
 {
     static int counter;
-
     counter++;
     if (counter == 35000) // Asumiendo que el programa corre a 60 FPS, 180 frames son 3 segundos.
     {
@@ -138,9 +138,9 @@ void wall_animation(map *c)
 void coin_animation(map *c) {
   static int counter = 0;
   static int a = 0;
-  
+
   counter++;
-  
+
   if (counter == 20000) {
     if (c->coin_ptr == c->coin_sprite_1 && a == 0) {
       c->coin_ptr = c->coin_sprite_2;
@@ -160,4 +160,10 @@ void coin_animation(map *c) {
     counter = 0;
   }
 }
-
+void check_coins(map *c)
+{
+	if (c->coins_gained == c->coins){
+		c->exit_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/wall.xpm", &c->width, &c->height);
+		mlx_put_image_to_window(c->mlx, c->mlx_win, c->exit_ptr, c->exit_x * BPP, c->exit_y * BPP);
+	}
+}
