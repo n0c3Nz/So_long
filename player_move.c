@@ -156,7 +156,6 @@ void coin_animation(map *c) {
     }
 	else if (c->coin_ptr == c->coin_sprite_3)
 		c->coin_ptr = c->coin_sprite_1;
-    
     put_imgs(c);
     counter = 0;
   }
