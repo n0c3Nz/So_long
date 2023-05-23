@@ -26,8 +26,8 @@ int path_finder(map *c)
     int i;
 	
 	i = 0;
-	int **visited = malloc(c->lines * sizeof(int *));
-//  int **visited = (int **)ft_calloc(c->lines, sizeof(int *));
+//	int **visited = malloc(c->lines * sizeof(int *));
+	int **visited = (int **)ft_calloc(c->lines, sizeof(int *));
     while(i < c->lines)
 	{
         visited[i] = ft_calloc(c->columns, sizeof(int));
@@ -39,13 +39,23 @@ int path_finder(map *c)
 	else
         printf("\nNo hay un camino posible desde 'P' a 'E'.\n");
 
-	// Liberar la memoria de la matriz
+// Liberar la memoria de la matriz
+	i = 0;
+	while(i < c->lines){
+    	free(visited[i]);
+    	visited[i] = NULL;  // Poner el puntero a NULL
+    	i++;
+	}
+	free(visited);
+	visited = NULL;  // Poner el puntero a NULL
+
+/* Liberar la memoria de la matriz
     i = 0;
 	while(i < c->lines){
         free(visited[i]);
 		i++;
 	}
-	free(visited);
+	free(visited);*/
 
     return(pathExists);
 }
@@ -72,6 +82,5 @@ int dfs(int row, int col, int **visited, map *c)
             return 1;
         }
     }
-
     return 0;
 }

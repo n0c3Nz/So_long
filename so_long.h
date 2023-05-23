@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #define BUFFER_SIZE 5000
+#define FRAMES_PER_CHANGE 60
 #define BPP 64
 // STRUCTS
 typedef struct{
@@ -25,6 +26,8 @@ typedef struct{
 	void *mlx;
 	void *mlx_win;
 	void *wall_ptr;
+	void *wall_sprite_1;
+	void *wall_sprite_2;
 	void *floor_ptr;
 	void *exit_ptr;
 	void *coin_ptr;
@@ -64,6 +67,8 @@ int	mlx_process(map *c);
 void put_imgs(map *c);
 void put_item(map *c, int y, int x);
 int key_hook(int keycode, map *c);
+void free_mapstruct(map *c);
+int loop_hook(map *c);// PROBANDO
 /*FUNCIONES DE GESTION DE MOVIMIENTOS*/
 int move_up(map *c);
 int move_down(map *c);

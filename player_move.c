@@ -99,7 +99,34 @@ int check_e(map *c){
 	if (c->mapstruct[c->player_y][c->player_x] == 'E')
 	{
 		ft_printf("\n¡Has completado el nivel, gracias por jugar!");
+		mlx_destroy_image(c->mlx, c->floor_ptr);
+		mlx_destroy_image(c->mlx, c->wall_ptr);
+		mlx_destroy_image(c->mlx, c->player_ptr);
+		mlx_destroy_image(c->mlx, c->coin_ptr);
+		mlx_destroy_image(c->mlx, c->exit_ptr);
+		mlx_destroy_window(c->mlx, c->mlx_win);
+		free_mapstruct(c);
 		exit(0);
 	}
 	return(0);
+}
+
+int loop_hook(map *c)
+{
+    static int counter = 0;
+
+    counter++;
+    if (counter == 35000) // Asumiendo que el programa corre a 60 FPS, 180 frames son 3 segundos.
+    {
+        // Cambia el sprite de los 'wall'
+        if (c->wall_ptr == c->wall_sprite_1)
+            c->wall_ptr = c->wall_sprite_2;
+        else
+            c->wall_ptr = c->wall_sprite_1;
+
+        // Redibuja el mapa
+        put_imgs(c);
+        counter = 0;
+    }
+    return (0);
 }
