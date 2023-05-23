@@ -31,6 +31,9 @@ typedef struct{
 	void *floor_ptr;
 	void *exit_ptr;
 	void *coin_ptr;
+	void *coin_sprite_1;
+	void *coin_sprite_2;
+	void *coin_sprite_3;
 	void *player_ptr;
 	int width;
 	int height;
@@ -69,6 +72,8 @@ void put_item(map *c, int y, int x);
 int key_hook(int keycode, map *c);
 void free_mapstruct(map *c);
 int loop_hook(map *c);// PROBANDO
+void wall_animation(map *c);
+void coin_animation(map *c);
 /*FUNCIONES DE GESTION DE MOVIMIENTOS*/
 int move_up(map *c);
 int move_down(map *c);

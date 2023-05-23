@@ -7,7 +7,10 @@ int mlx_process(map *c)
 	c->wall_ptr = c->wall_sprite_1;
 	c->floor_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/floor.xpm", &c->width, &c->height);
 	c->exit_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/exit.xpm", &c->width, &c->height);
-	c->coin_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/coin.xpm", &c->width, &c->height);
+	c->coin_sprite_1 = mlx_xpm_file_to_image(c->mlx, "sprites/coin.xpm", &c->width, &c->height);
+	c->coin_sprite_2 = mlx_xpm_file_to_image(c->mlx, "sprites/coin2.xpm", &c->width, &c->height);
+	c->coin_sprite_3 = mlx_xpm_file_to_image(c->mlx, "sprites/coin3.xpm", &c->width, &c->height);
+	c->coin_ptr = c->coin_sprite_1;
 	c->player_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/p_stand.xpm", &c->width, &c->height); 
 	// c->player_img = mlx_get_data_addr(c->player_ptr, &c->width, &c->height, &c->endian);
 	c->moves = 0;

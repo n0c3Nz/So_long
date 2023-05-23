@@ -113,7 +113,13 @@ int check_e(map *c){
 
 int loop_hook(map *c)
 {
-    static int counter = 0;
+	wall_animation(c);
+	coin_animation(c);
+    return (0);
+}
+void wall_animation(map *c)
+{
+    static int counter;
 
     counter++;
     if (counter == 35000) // Asumiendo que el programa corre a 60 FPS, 180 frames son 3 segundos.
@@ -128,5 +134,31 @@ int loop_hook(map *c)
         put_imgs(c);
         counter = 0;
     }
-    return (0);
 }
+void coin_animation(map *c) {
+  static int counter = 0;
+  static int a = 0;
+  
+  counter++;
+  
+  if (counter == 20000) {
+    if (c->coin_ptr == c->coin_sprite_1 && a == 0) {
+      c->coin_ptr = c->coin_sprite_2;
+      a++;
+    }
+    else if (c->coin_ptr == c->coin_sprite_2) {
+      c->coin_ptr = c->coin_sprite_1;
+      a++;
+    }
+    else if (c->coin_ptr == c->coin_sprite_1 && a == 2) {
+      c->coin_ptr = c->coin_sprite_3;
+      a = 0;
+    }
+	else if (c->coin_ptr == c->coin_sprite_3)
+		c->coin_ptr = c->coin_sprite_1;
+    
+    put_imgs(c);
+    counter = 0;
+  }
+}
+
