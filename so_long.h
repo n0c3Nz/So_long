@@ -79,9 +79,13 @@ void coin_animation(map *c);
 void check_coins(map *c);
 /*FUNCIONES DE GESTION DE MOVIMIENTOS*/
 int move_up(map *c);
+void do_up(map *c);
 int move_down(map *c);
+void do_down(map *c);
 int move_right(map *c);
+void do_right(map *c);
 int move_left(map *c);
+void do_left(map *c);
 int check_e(map *c);
 /*FUNCIONES DE GESTIÓN DE ERRORES*/
 void perror(const char *s);

@@ -70,6 +70,11 @@ int key_hook(int keycode, map *c)
 		move_right(c);
 	else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
 		move_up(c);
+	
+	else
+		ft_printf("\n¡Tecla inválida!");
+	ft_printf("\n Número de movimientos %i", c->moves);
+	ft_printf("\n Coins %i/%i", c->coins_gained, c->coins);
 	check_coins(c);
 	check_e(c);
 	return (0);
