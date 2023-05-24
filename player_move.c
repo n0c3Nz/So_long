@@ -67,7 +67,6 @@ int move_left(map *c)
 int check_e(map *c){
 	if (c->mapstruct[c->player_y][c->player_x] == 'E')
 	{
-		sleep(1);
 		ft_printf("\n¡Has completado el nivel, gracias por jugar!");
 		mlx_destroy_image(c->mlx, c->floor_ptr);
 		mlx_destroy_image(c->mlx, c->wall_ptr);
