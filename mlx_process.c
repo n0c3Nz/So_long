@@ -54,7 +54,7 @@ void put_item(map *c, int y, int x)
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->coin_ptr, x * BPP, y * BPP);
 	else if (c->mapstruct[y][x] == 'P')
 	{
-		mlx_put_image_to_window(c->mlx, c->mlx_win, c->player_ptr, x * BPP, y * BPP);
+		//mlx_put_image_to_window(c->mlx, c->mlx_win, c->player_ptr, x * BPP, y * BPP);
 		// c->player_x = x;
 		// c->player_y = y;
 	}

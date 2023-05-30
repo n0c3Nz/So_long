@@ -43,6 +43,7 @@ typedef struct{
 	int exit_x;
 	int exit_y;
 	int moves;
+	int max_actions;
 	int coins_gained;
 	int endian;
 }map;
@@ -77,6 +78,7 @@ int loop_hook(map *c);// PROBANDO
 void wall_animation(map *c);
 void coin_animation(map *c);
 void check_coins(map *c);
+void draw_image(void *mlx_ptr, void *win_ptr, void *img_ptr, int start_x, int start_y, int width, int height, int exclude_color);
 /*FUNCIONES DE GESTION DE MOVIMIENTOS*/
 int move_up(map *c);
 void do_up(map *c);
