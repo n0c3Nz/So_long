@@ -1,67 +1,31 @@
 #include "so_long.h"
 
-int move_up(map *c)
-{
-	ft_printf("\nHas pulsado la tecla W!");
-	if (c->mapstruct[c->player_y - 1][c->player_x] != '1')
+int handlekeys(map *c, char key) {	
+	int coordX;
+	coordX = 0;
+	int coordY;
+	coordY = 0;
+	if (key == 'a')
+		coordX = -1;
+	else if (key == 's') 
+		coordY = 1;
+	else if (key == 'd') 
+		coordX = 1;
+	else if (key == 'w') 
+		coordY = -1;
+	if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] != '1')
 	{
-		if (c->mapstruct[c->player_y - 1][c->player_x] == 'C')
+		if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'C')
 			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y - 1][c->player_x] == '0' || c->mapstruct[c->player_y - 1][c->player_x] == 'P' || c->mapstruct[c->player_y - 1][c->player_x] == 'C' || (c->mapstruct[c->player_y - 1][c->player_x] == 'E' && c->coins_gained == c->coins))
+		if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == '0' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'P' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'C' || (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'E' && c->coins_gained == c->coins))
 		{
-			do_up(c);
-			return (0);
-		}
-	}
-	return(1);
-}
-
-int move_down(map *c)
-{
-	ft_printf("\nHas pulsado la tecla S!");
-	if (c->mapstruct[c->player_y + 1][c->player_x] != '1')
-	{
-		if (c->mapstruct[c->player_y + 1][c->player_x] == 'C')
-			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y + 1][c->player_x] == '0' || c->mapstruct[c->player_y + 1][c->player_x] == 'P' || c->mapstruct[c->player_y + 1][c->player_x] == 'C' || (c->mapstruct[c->player_y + 1][c->player_x] == 'E' && c->coins_gained == c->coins))
-		{
-			do_down(c);
+			ft_printf("\nNúmero de movimientos %i", c->moves);
+			ft_printf("\n\n    Coins %i/%i", c->coins_gained, c->coins);
+			handlemove(c, coordX, coordY);
 			return (0);
 		}
 	}
 	return (1);
-}
-
-int move_right(map *c)
-{
-	ft_printf("\nHas pulsado la tecla D!");
-	if (c->mapstruct[c->player_y][c->player_x + 1] != '1')
-	{
-		if (c->mapstruct[c->player_y][c->player_x + 1] == 'C')
-			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y][c->player_x + 1] == '0' || c->mapstruct[c->player_y][c->player_x + 1] == 'P' || c->mapstruct[c->player_y][c->player_x + 1] == 'C' || (c->mapstruct[c->player_y][c->player_x + 1] == 'E' && c->coins_gained == c->coins))
-		{
-			do_right(c);
-			return(0);
-		}
-	}
-	return(1);
-}
-
-int move_left(map *c)
-{
-	ft_printf("\nHas pulsado la tecla A!");
-	if (c->mapstruct[c->player_y][c->player_x - 1] != '1')
-	{
-		if (c->mapstruct[c->player_y][c->player_x - 1] == 'C')
-			c->coins_gained += 1;
-		if (c->mapstruct[c->player_y][c->player_x - 1] == '0' || c->mapstruct[c->player_y][c->player_x - 1] == 'P' || c->mapstruct[c->player_y][c->player_x - 1] == 'C' || (c->mapstruct[c->player_y][c->player_x - 1] == 'E' && c->coins_gained == c->coins))
-		{
-			do_left(c);
-			return(0);
-		}
-	}
-	return(1);
 }
 
 int check_e(map *c){

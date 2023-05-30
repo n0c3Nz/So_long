@@ -80,17 +80,20 @@ void coin_animation(map *c);
 void check_coins(map *c);
 void draw_image(void *mlx_ptr, void *win_ptr, void *img_ptr, int start_x, int start_y, int width, int height, int exclude_color);
 /*FUNCIONES DE GESTION DE MOVIMIENTOS*/
-int move_up(map *c);
-void do_up(map *c);
-int move_down(map *c);
-void do_down(map *c);
-int move_right(map *c);
-void do_right(map *c);
-int move_left(map *c);
-void do_left(map *c);
 int check_e(map *c);
 /*FUNCIONES DE GESTIÓN DE ERRORES*/
 void perror(const char *s);
 char *strerror(int errnum);
-
+/*EXATRON*/
+int get_pixel_color(void *img_ptr, int x, int y);
+void handlemove(map *c, int coordx, int coordy);
+int handlekeys(map *c, char key);
+char *getdirectionimage1(int coordx, int coordy);
+char *getdirectionimage2(int coordx, int coordy);
+float getsumax(int coordx, float lx);
+float getsumay(int coordy, float lx);
+char *getdirectionstatic(int coordx, int coordy);
+int drawcharacter(int stepanimation, map *c, int coordx, int coordy);
+void initplayer(map *c, int coordx, int coordy);
+char convertirKeyCodeALetra(int keycode);
 #endif
