@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <time.h>//Utilizada para la parte bonus, ANIMACIONES.
 #define BUFFER_SIZE 5000
 #define FRAMES_PER_CHANGE 60
 #define BPP 64
@@ -46,6 +47,7 @@ typedef struct{
 	int max_actions;
 	int coins_gained;
 	int endian;
+	clock_t env_animation;//parte bonus
 }map;
 /*FUNCIONES PRINTF*/
 int	ft_printf(const char *fmt, ...);
@@ -96,4 +98,5 @@ char *getdirectionstatic(int coordx, int coordy);
 int drawcharacter(int stepanimation, map *c, int coordx, int coordy);
 void initplayer(map *c, int coordx, int coordy);
 char convertirKeyCodeALetra(int keycode);
+int timer(clock_t inicio, double tiempo_deseado);
 #endif

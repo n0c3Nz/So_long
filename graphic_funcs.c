@@ -2,13 +2,18 @@
 
 int loop_hook(map *c)
 {
-	wall_animation(c);
-	coin_animation(c);
+	clock_t actual = clock();
+    double tiempo_transcurrido = (double)(actual - c->env_animation) / CLOCKS_PER_SEC;
+
+    if (tiempo_transcurrido >= 0.5) {
+        wall_animation(c);
+		coin_animation(c);
+        c->env_animation = actual;
+    }
     return (0);
 }
 void wall_animation(map *c)
 {
-    usleep(400000);
 	if (c->wall_ptr == c->wall_sprite_1)
         c->wall_ptr = c->wall_sprite_2;
     else
@@ -16,7 +21,6 @@ void wall_animation(map *c)
     put_imgs(c);
 }
 void coin_animation(map *c) {
-  usleep(300000);
   static int a = 0;
     if (c->coin_ptr == c->coin_sprite_1 && a == 0) {
       c->coin_ptr = c->coin_sprite_2;

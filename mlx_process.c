@@ -90,7 +90,8 @@ char convertirKeyCodeALetra(int keycode) {
     if (keycode >= 65 && keycode <= 90) {
         return (char)keycode;  // Códigos ASCII para letras mayúsculas
     } else if (keycode >= 97 && keycode <= 122) {
-        return (char)keycode;  // Códigos ASCII para letras minúsculas
+        keycode -= 32;
+		return (char)keycode;  // Códigos ASCII para letras minúsculas
     } else {
         printf("Error: Código de tecla inválido.\n");
         return '\0';  // Valor nulo para indicar un error

@@ -112,23 +112,42 @@ void initplayer(map *c, int coordx, int coordy) {
 void handlemove(map *c, int coordx, int coordy)
 {
 	initplayer(c, coordx, coordy);
-	int stepanimation = 0;//sin el bucle, lo mantenemos en 0 para que al llegar a 2 o a 4 realice la animacion de la funcion drawcharacter
-	float lx = 0;//son los saltos de una celda a otra, se mantiene en 0 porque en el bucle se suma 0.1 hasta llegar a 1
-	while (lx < 1){
-		stepanimation++;		
-		lx += 0.1;//los saltos de una celda a otra van sumandose poco a poco para darle movimiento al personaje fluido
+	int stepanimation = 0;
+	float lx = 0;
+	clock_t inicio = clock();
+
+	while (lx < 1) {
+		stepanimation++;
+		lx += 0.1;
 		stepanimation = drawcharacter(stepanimation, c, coordx, coordy);
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, c->player_x * BPP, c->player_y * BPP);
-		mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, (c->player_x + coordx) * BPP, (c->player_y + coordy) * BPP);//celda de delantety
+		mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, (c->player_x + coordx) * BPP, (c->player_y + coordy) * BPP);
 		draw_image(c->mlx, c->mlx_win, c->player_ptr, (c->player_x + getsumax(coordx, lx)) * BPP, (c->player_y + getsumay(coordy, lx)) * BPP, c->width, c->height, get_pixel_color(c->player_ptr, 0, 0));
 		mlx_do_sync(c->mlx);
-		usleep(30000);//PARTE BONUS SE JUSTIFICA PARA LA ANIMACION.
+		inicio = timer(inicio, 0.035);
 	}
 	c->player_x += coordx;
 	c->player_y += coordy;
+	c->max_actions--;
 	mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, c->player_x * BPP, c->player_y * BPP);
 	c->player_ptr = mlx_xpm_file_to_image(c->mlx, getdirectionstatic(coordx, coordy), &c->width, &c->height);// PRUEBA
 	draw_image(c->mlx, c->mlx_win, c->player_ptr, c->player_x * BPP, c->player_y * BPP, c->width, c->height, get_pixel_color(c->player_ptr, 0, 0));	
 	mlx_do_sync(c->mlx);
 	c->moves += 1;
+}
+
+
+/*ESTO ES EL TIMER DE LA ANIMACION*/
+
+int timer(clock_t inicio, double tiempo_deseado)
+{
+	clock_t actual = clock();
+	double tiempo_transcurrido = (double)(actual - inicio) / CLOCKS_PER_SEC;
+	double tiempo_restante = tiempo_deseado - tiempo_transcurrido;
+	// Esperar el tiempo restante para alcanzar el tiempo deseado
+	double tiempo_espera = tiempo_restante * CLOCKS_PER_SEC;
+	clock_t espera_final = actual + (clock_t)tiempo_espera;
+	while (clock() < espera_final)// Esperar...
+	inicio = clock();
+	return(inicio);
 }
