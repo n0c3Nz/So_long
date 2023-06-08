@@ -124,11 +124,10 @@ void handlemove(map *c, int coordx, int coordy)
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, (c->player_x + coordx) * BPP, (c->player_y + coordy) * BPP);
 		draw_image(c->mlx, c->mlx_win, c->player_ptr, (c->player_x + getsumax(coordx, lx)) * BPP, (c->player_y + getsumay(coordy, lx)) * BPP, c->width, c->height, get_pixel_color(c->player_ptr, 0, 0));
 		mlx_do_sync(c->mlx);
-		inicio = timer(inicio, 0.035);
+		inicio = timer(inicio, 0.015);
 	}
 	c->player_x += coordx;
 	c->player_y += coordy;
-	c->max_actions--;
 	mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, c->player_x * BPP, c->player_y * BPP);
 	c->player_ptr = mlx_xpm_file_to_image(c->mlx, getdirectionstatic(coordx, coordy), &c->width, &c->height);// PRUEBA
 	draw_image(c->mlx, c->mlx_win, c->player_ptr, c->player_x * BPP, c->player_y * BPP, c->width, c->height, get_pixel_color(c->player_ptr, 0, 0));	
@@ -150,4 +149,19 @@ int timer(clock_t inicio, double tiempo_deseado)
 	while (clock() < espera_final)// Esperar...
 	inicio = clock();
 	return(inicio);
+}
+
+/*TIMER PARA DETERMINAR EL INTERVALO DE LOS MOVIMIENTOS DEL JUGADOR*/
+int hasEnoughTimeElapsed(void)
+{
+    clock_t currentTime = clock();
+    double elapsed = (double)(currentTime - lastKeyPressTime) / CLOCKS_PER_SEC;
+
+    if (elapsed >= 0.035)
+    {
+        lastKeyPressTime = currentTime;
+        return 1; // Ha pasado suficiente tiempo
+    }
+
+    return 0; // No ha pasado suficiente tiempo
 }

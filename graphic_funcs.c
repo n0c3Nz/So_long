@@ -40,7 +40,7 @@ void coin_animation(map *c) {
 }
 void check_coins(map *c)
 {
-	if (c->coins_gained == c->coins){
+	if (c->coins_gained >= c->coins){
 		c->exit_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/exit_open.xpm", &c->width, &c->height);
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->exit_ptr, c->exit_x * BPP, c->exit_y * BPP);
 	}

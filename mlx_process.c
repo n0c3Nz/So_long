@@ -54,23 +54,30 @@ void put_item(map *c, int y, int x)
 	else if (c->mapstruct[y][x] == 'C')
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->coin_ptr, x * BPP, y * BPP);
 }
+// Variables globales
+clock_t lastKeyPressTime = 0;
+const int MIN_DELAY = 1000000; // 1 segundo en microsegundos
+
 int key_hook(int keycode, map *c)
 {
 	char letra = convertirKeyCodeALetra(keycode);
 	ft_printf("\nHas pulsado la tecla %c!", letra);
-	if (keycode == 0x61 || keycode == 0x41 || keycode == 0) // tecla a o A ¡EL ULTIMO ES PARA MAC!.
-		handlekeys(c, 'a');
-	else if (keycode == 0x73 || keycode == 0x53 || keycode == 1) // tecla s o S
-		handlekeys(c, 's');
-	else if (keycode == 0x64 || keycode == 0x44 || keycode == 2) // tecla d o D
-		handlekeys(c, 'd');
-	else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
-		handlekeys(c, 'w');
-	else {
-		ft_printf("\n¡Tecla inválida!");
-		return (1);
+	if (hasEnoughTimeElapsed())
+	{
+		if (keycode == 0x61 || keycode == 0x41 || keycode == 0) // tecla a o A ¡EL ULTIMO ES PARA MAC!.
+			handlekeys(c, 'a');
+		else if (keycode == 0x73 || keycode == 0x53 || keycode == 1) // tecla s o S
+			handlekeys(c, 's');
+		else if (keycode == 0x64 || keycode == 0x44 || keycode == 2) // tecla d o D
+			handlekeys(c, 'd');
+		else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
+			handlekeys(c, 'w');
+		else
+		{
+			ft_printf("\n¡Tecla inválida!");
+			return (1);
+		}
 	}
-	check_coins(c);
 	check_e(c);
 	return (0);
 }
@@ -92,8 +99,6 @@ char convertirKeyCodeALetra(int keycode) {
     } else if (keycode >= 97 && keycode <= 122) {
         keycode -= 32;
 		return (char)keycode;  // Códigos ASCII para letras minúsculas
-    } else {
-        printf("Error: Código de tecla inválido.\n");
+    } else
         return '\0';  // Valor nulo para indicar un error
-    }
 }

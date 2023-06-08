@@ -17,14 +17,11 @@ int handlekeys(map *c, char key) {
 	{
 		if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'C')
 			c->coins_gained += 1;
+		check_coins(c);
 		if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == '0' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'P' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'C' || (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'E' && c->coins_gained == c->coins))
 		{
-			if (c->max_actions >= 1){
-				return (0);
-			}
 			ft_printf("\nNúmero de movimientos %i", c->moves);
 			ft_printf("\nCoins %i/%i\n", c->coins_gained, c->coins);
-			c->max_actions++;
 			handlemove(c, coordX, coordY);
 			return (0);
 		}

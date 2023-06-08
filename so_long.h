@@ -13,6 +13,9 @@
 #define BUFFER_SIZE 5000
 #define FRAMES_PER_CHANGE 60
 #define BPP 64
+// Variables globales
+extern clock_t lastKeyPressTime;
+extern const int MIN_DELAY;
 // STRUCTS
 typedef struct{
 	char *map_name;
@@ -44,7 +47,6 @@ typedef struct{
 	int exit_x;
 	int exit_y;
 	int moves;
-	int max_actions;
 	int coins_gained;
 	int endian;
 	clock_t env_animation;//parte bonus
@@ -99,4 +101,5 @@ int drawcharacter(int stepanimation, map *c, int coordx, int coordy);
 void initplayer(map *c, int coordx, int coordy);
 char convertirKeyCodeALetra(int keycode);
 int timer(clock_t inicio, double tiempo_deseado);
+int hasEnoughTimeElapsed(void);
 #endif
