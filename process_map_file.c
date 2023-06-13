@@ -49,22 +49,22 @@ int line_counter(int fd)
 	}
     return(line);
 }
-int map_validator(char *buffer, map *c)
+int map_validator(char *buffer, in *fw)
 {
 	static int i;
 
-	if (i == 0 && i < c->lines)
+	if (i == 0 && i < fw->map->lines)
 	{
-		first_line_analyzer(buffer, c);
+		first_line_analyzer(buffer, fw);
 		i++;
 	}
-	else if (i > 0 && (i + 1) < c->lines)
+	else if (i > 0 && (i + 1) < fw->map->lines)
 	{
-		body_line_analyzer(buffer, c);
+		body_line_analyzer(buffer, fw);
 		i++;
 	}
-	else if ((i + 1) == c->lines)
-		last_line_analyzer(buffer, c);
+	else if ((i + 1) == fw->map->lines)
+		last_line_analyzer(buffer, fw);
 	else
 	{
 		perror("Error, tremenda fumada");
@@ -73,7 +73,7 @@ int map_validator(char *buffer, map *c)
 	return(0);
 }
 
-int process_line(int fd, map *c)
+int process_line(int fd, in *fw)
 {
     char buffer[BUFFER_SIZE];
     ssize_t bytes_read;
@@ -83,7 +83,7 @@ int process_line(int fd, map *c)
     while ((bytes_read = read(fd, &buffer[i], 1)) > 0)
     {
         if (buffer[i] == '\n')
-            check_line(buffer, &i, c);
+            check_line(buffer, &i, fw);
         else
             i++;
     }
@@ -95,28 +95,26 @@ int process_line(int fd, map *c)
     return(0);
 }
 
-int process_map_file(int argc, char **argv, map *c)
+int process_map_file(in *fw)
 {
-	check_argc(argc);
-	check_file_extension(argv[1], ".ber");
-	int fd = open(c->map_name, O_RDONLY);
-	c->lines = line_counter(fd);
+	int fd = open(fw->map->map_name, O_RDONLY);
+	fw->map->lines = line_counter(fd);
 	close(fd);
-	int fd2 = open(c->map_name, O_RDONLY);
-	c->coins = 0;
-	c->startp = 0;
-	c->zeros = 0;
-	c->ones = 0;
-	c->exitp = 0;
-	process_line(fd2, c);
-	if (c->coins < 1 || c->exitp != 1 || c->startp != 1)
+	int fd2 = open(fw->map->map_name, O_RDONLY);
+	fw->map->coins = 0;
+	fw->map->startp = 0;
+	fw->map->zeros = 0;
+	fw->map->ones = 0;
+	fw->map->exitp = 0;
+	process_line(fd2, fw);
+	if (fw->map->coins < 1 || fw->map->exitp != 1 || fw->map->startp != 1)
 	{
 		perror("Mapa no válido, faltan C ó sobran P ó E");
 		exit(1);
 	}
-	ft_printf("\nColumnas:\t\t%d\nFilas:\t\t\t%d\nCoins:\t\t\t%d\nUnos:\t\t\t%d\nCeros:\t\t\t%d\nPunto de entrada:\t%d\nPunto de salida:\t%d\n", c->columns, c->lines, c->coins, c->ones, c->zeros, c->startp, c->exitp);// DEBUG
-	ft_printf("\nPosición y: %i\nPosición x: %i\n", c->player_y, c->player_x);
-	if (!path_finder(c))
+	ft_printf("\nColumnas:\t\t%d\nFilas:\t\t\t%d\nCoins:\t\t\t%d\nUnos:\t\t\t%d\nCeros:\t\t\t%d\nPunto de entrada:\t%d\nPunto de salida:\t%d\n", fw->map->columns, fw->map->lines, fw->map->coins, fw->map->ones, fw->map->zeros, fw->map->startp, fw->map->exitp);// DEBUG
+	ft_printf("\nPosición y: %i\nPosición x: %i\n", fw->player->y, fw->player->x);
+	if (!path_finder(fw))
 		exit(1);
 	close(fd2);
 	return (0);

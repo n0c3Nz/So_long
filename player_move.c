@@ -1,9 +1,11 @@
 #include "so_long.h"
 
-int handlekeys(map *c, char key) {	
+int handlekeys(in *fw, char key)
+{	
 	int coordX;
-	coordX = 0;
 	int coordY;
+
+	coordX = 0;
 	coordY = 0;
 	if (key == 'a')
 		coordX = -1;
@@ -13,34 +15,40 @@ int handlekeys(map *c, char key) {
 		coordX = 1;
 	else if (key == 'w') 
 		coordY = -1;
-	if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] != '1')
+	return (check_move(fw, coordX, coordY));
+}
+
+int check_move(in *fw, int coordX, int coordY)
+{
+	if (fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] != '1')
 	{
-		if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'C')
-			c->coins_gained += 1;
-		check_coins(c);
-		if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == '0' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'P' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'C' || (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'E' && c->coins_gained == c->coins))
+		if (fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] == 'C')
+			fw->map->coins_gained += 1;
+		check_coins(fw);
+		if (fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] == '0' || fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] == 'P' || fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] == 'C' || (fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] == 'E' && fw->map->coins_gained == fw->map->coins))
 		{
-			ft_printf("\nNúmero de movimientos %i\nCoins %i/%i\n", c->moves, c->coins_gained, c->coins);
-			handlemove(c, coordX, coordY);
+			ft_printf("\nNúmero de movimientos %i\nCoins %i/%i\n", fw->map->moves, fw->map->coins_gained, fw->map->coins);
+			handlemove(fw, fw->player, coordX, coordY);
+			fw->map->moves += 1;
+			check_e(fw);
 			return (0);
 		}
 	}
-	return (1);
+	return(1);
 }
 
-int check_e(map *c){
-	if (c->mapstruct[c->player_y][c->player_x] == 'E')
+int check_e(in *fw){
+	if (fw->map->mapstruct[fw->player->y][fw->player->x] == 'E')
 	{
 		ft_printf("\n¡Has completado el nivel, gracias por jugar!");
-		mlx_destroy_image(c->mlx, c->floor_ptr);
-		mlx_destroy_image(c->mlx, c->wall_ptr);
-		mlx_destroy_image(c->mlx, c->player_ptr);
-		mlx_destroy_image(c->mlx, c->coin_ptr);
-		mlx_destroy_image(c->mlx, c->exit_ptr);
-		mlx_destroy_window(c->mlx, c->mlx_win);
-		free_mapstruct(c);
+		mlx_destroy_image(fw->map->mlx, fw->map->floor_ptr);
+		mlx_destroy_image(fw->map->mlx, fw->map->wall_ptr);
+		mlx_destroy_image(fw->map->mlx, fw->player->ptr);
+		mlx_destroy_image(fw->map->mlx, fw->map->coin_ptr);
+		mlx_destroy_image(fw->map->mlx, fw->map->exit_ptr);
+		mlx_destroy_window(fw->map->mlx, fw->map->mlx_win);
+		free_mapstruct(fw);
 		exit(0);
 	}
 	return(0);
 }
-

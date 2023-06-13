@@ -1,10 +1,10 @@
 #include "so_long.h"
 
-int last_line_analyzer(char *buffer, map *c)
+int last_line_analyzer(char *buffer, in *fw)
 {
 	int a;
 	a = 0;
-	if (ft_strlen(buffer) != (size_t)c->columns)
+	if (ft_strlen(buffer) != (size_t)fw->map->columns)
 	{
 		perror("Mapa inconsistente en la última línea");
 		exit(1);
@@ -21,19 +21,19 @@ int last_line_analyzer(char *buffer, map *c)
 	return(0);
 }
 
-int path_finder(map *c)
+int path_finder(in *fw)
 {
     int i;
 	
 	i = 0;
 //	int **visited = malloc(c->lines * sizeof(int *));
-	int **visited = (int **)ft_calloc(c->lines, sizeof(int *));
-    while(i < c->lines)
+	int **visited = (int **)ft_calloc(fw->map->lines, sizeof(int *));
+    while(i < fw->map->lines)
 	{
-        visited[i] = ft_calloc(c->columns, sizeof(int));
+        visited[i] = ft_calloc(fw->map->columns, sizeof(int));
 		i++;
 	}
-    int pathExists = dfs(c->player_y, c->player_x, visited, c);
+    int pathExists = dfs(fw->player->y, fw->player->x, visited, fw);
     if (pathExists)
         printf("\nHay un camino posible desde 'P' a 'E'.\n");
 	else
@@ -41,7 +41,7 @@ int path_finder(map *c)
 
 // Liberar la memoria de la matriz
 	i = 0;
-	while(i < c->lines){
+	while(i < fw->map->lines){
     	free(visited[i]);
     	visited[i] = NULL;  // Poner el puntero a NULL
     	i++;
@@ -59,10 +59,10 @@ int path_finder(map *c)
 
     return(pathExists);
 }
-int dfs(int row, int col, int **visited, map *c)
+int dfs(int row, int col, int **visited, in *fw)
 {
     // Verificar si estamos fuera de los límites del mapa
-	if (row < 0 || row >= c->lines || col < 0 || col >= c->columns)
+	if (row < 0 || row >= fw->map->lines || col < 0 || col >= fw->map->columns)
         return 0;
     // Verificar si el punto actual ya ha sido visitado
     if (visited[row][col])
@@ -70,15 +70,15 @@ int dfs(int row, int col, int **visited, map *c)
     // Marcar el punto actual como visitado
     visited[row][col] = 1;
     // Verificar si hemos llegado al punto 'E'
-    if (c->mapstruct[row][col] == 'E')
+    if (fw->map->mapstruct[row][col] == 'E')
         return 1;
     // Verificar si el punto actual es transitable ('0' o 'P')
-    if (c->mapstruct[row][col] == '0' || c->mapstruct[row][col] == 'C' || c->mapstruct[row][col] == 'P') {
+    if (fw->map->mapstruct[row][col] == '0' || fw->map->mapstruct[row][col] == 'C' || fw->map->mapstruct[row][col] == 'P') {
         // Llamar recursivamente a DFS en los vecinos
-        if (dfs(row - 1, col, visited, c) ||
-            dfs(row + 1, col, visited, c) ||
-            dfs(row, col - 1, visited, c) ||
-            dfs(row, col + 1, visited, c)) {
+        if (dfs(row - 1, col, visited, fw) ||
+            dfs(row + 1, col, visited, fw) ||
+            dfs(row, col - 1, visited, fw) ||
+            dfs(row, col + 1, visited, fw)) {
             return 1;
         }
     }

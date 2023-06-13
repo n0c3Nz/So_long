@@ -12,7 +12,7 @@ int get_pixel_color(void *img_ptr, int x, int y)
     return color;
 }
 
-void draw_image(map *c, void *img_ptr, int start_x, int start_y)
+void draw_image(in *fw, void *img_ptr, int start_x, int start_y)
 {
     int x;
 	int y;
@@ -33,7 +33,7 @@ void draw_image(map *c, void *img_ptr, int start_x, int start_y)
             color = get_pixel_color(img_ptr, x, y);
             if (color != exclude_color) // si el color no es el color excluido
             {
-                mlx_pixel_put(c->mlx, c->mlx_win, start_x + x, start_y + y, color);
+                mlx_pixel_put(fw->map->mlx, fw->map->mlx_win, start_x + x, start_y + y, color);
             }
             x++;
         }
@@ -96,48 +96,47 @@ float getsumay(int coordy, float lx){
 		sumay -= lx;
 	return sumay;
 }
-int drawcharacter(int stepanimation, map *c, int coordx, int coordy) {
-	if (stepanimation == 2)
+int drawcharacter(in *fw, entity *entity, int coordx, int coordy) {
+	if (entity->stepanimation == 2)
 	{
-		c->player_ptr = mlx_xpm_file_to_image(c->mlx, getdirectionimage2(coordx,coordy), &c->width, &c->height);
-		mlx_do_sync(c->mlx);
+		entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionimage2(coordx,coordy), &fw->map->width, &fw->map->height);
+		mlx_do_sync(fw->map->mlx);
 	}
-	else if (stepanimation == 4)
+	else if (entity->stepanimation == 4)
 	{
-		c->player_ptr = mlx_xpm_file_to_image(c->mlx, getdirectionimage1(coordx,coordy), &c->width, &c->height);
-		mlx_do_sync(c->mlx);
-		stepanimation = 0;
+		entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionimage1(coordx,coordy), &fw->map->width, &fw->map->height);
+		mlx_do_sync(fw->map->mlx);
+		entity->stepanimation = 0;
 	}
-	return stepanimation;
+	return (fw->player->stepanimation);
 }
-void initplayer(map *c, int coordx, int coordy) {
-	c->mapstruct[c->player_y][c->player_x] = '0';//fallara esto
-	if (c->mapstruct[c->player_y + coordy][c->player_x + coordx] != 'E')
-		c->mapstruct[c->player_y + coordy][c->player_x + coordx] = 'P';
+void initplayer(in *fw, int coordx, int coordy) {
+	fw->map->mapstruct[fw->player->y][fw->player->x] = '0';//fallara esto
+	if (fw->map->mapstruct[fw->player->y + coordy][fw->player->x + coordx] != 'E')
+		fw->map->mapstruct[fw->player->y + coordy][fw->player->x + coordx] = 'P';
 }
-void handlemove(map *c, int coordx, int coordy)
+void handlemove(in *fw, entity *entity, int coordx, int coordy)
 {
-	initplayer(c, coordx, coordy);
-	int stepanimation = 0;
+	initplayer(fw, coordx, coordy);
+	entity->stepanimation = 0;
 	float lx = 0;
 	clock_t inicio = clock();
 	while (lx < 1) {
-		stepanimation++;
+		entity->stepanimation++;
 		lx += 0.1;
-		stepanimation = drawcharacter(stepanimation, c, coordx, coordy);
-		mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, c->player_x * BPP, c->player_y * BPP);
-		mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, (c->player_x + coordx) * BPP, (c->player_y + coordy) * BPP);
-		draw_image(c, c->player_ptr, (c->player_x + getsumax(coordx, lx)) * BPP, (c->player_y + getsumay(coordy, lx)) * BPP);
-		mlx_do_sync(c->mlx);
+		entity->stepanimation = drawcharacter(fw, fw->player, coordx, coordy);
+		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
+		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, (entity->x + coordx) * BPP, (entity->y + coordy) * BPP);
+		draw_image(fw, entity->ptr, (entity->x + getsumax(coordx, lx)) * BPP, (entity->y + getsumay(coordy, lx)) * BPP);
+		mlx_do_sync(fw->map->mlx);
 		inicio = timer(inicio, 0.015);
 	}
-	c->player_x += coordx;
-	c->player_y += coordy;
-	mlx_put_image_to_window(c->mlx, c->mlx_win, c->floor_ptr, c->player_x * BPP, c->player_y * BPP);
-	c->player_ptr = mlx_xpm_file_to_image(c->mlx, getdirectionstatic(coordx, coordy), &c->width, &c->height);// PRUEBA
-	draw_image(c, c->player_ptr, c->player_x * BPP, c->player_y * BPP);	
-	mlx_do_sync(c->mlx);
-	c->moves += 1;
+	entity->x += coordx;
+	entity->y += coordy;
+	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
+	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(coordx, coordy), &fw->map->width, &fw->map->height);// PRUEBA
+	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);	
+	mlx_do_sync(fw->map->mlx);
 }
 
 
