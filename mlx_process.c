@@ -12,8 +12,8 @@ int mlx_process(map *c)
 	c->coin_sprite_3 = mlx_xpm_file_to_image(c->mlx, "sprites/coin3.xpm", &c->width, &c->height);
 	c->coin_ptr = c->coin_sprite_1;
 	c->player_ptr = mlx_xpm_file_to_image(c->mlx, "sprites/p_down_t.xpm", &c->width, &c->height); 
-	// c->player_img = mlx_get_data_addr(c->player_ptr, &c->width, &c->height, &c->endian);
 	c->moves = 0;
+	//ft_printf("\nAQUI EL VALOR DE MOVES ES = %i\n", c->moves);		DEBUG
 	c->coins_gained = 0;
 	put_imgs(c);
 	handlemove(c, 0, 0);
@@ -54,7 +54,7 @@ void put_item(map *c, int y, int x)
 	else if (c->mapstruct[y][x] == 'C')
 		mlx_put_image_to_window(c->mlx, c->mlx_win, c->coin_ptr, x * BPP, y * BPP);
 }
-// Variables globales
+// Variables globales para el limitador de movimientos.
 clock_t lastKeyPressTime = 0;
 const int MIN_DELAY = 1000000; // 1 segundo en microsegundos
 

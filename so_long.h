@@ -82,7 +82,7 @@ int loop_hook(map *c);// PROBANDO
 void wall_animation(map *c);
 void coin_animation(map *c);
 void check_coins(map *c);
-void draw_image(void *mlx_ptr, void *win_ptr, void *img_ptr, int start_x, int start_y, int width, int height, int exclude_color);
+void draw_image(map *c, void *img_ptr, int start_x, int start_y);
 /*FUNCIONES DE GESTION DE MOVIMIENTOS*/
 int check_e(map *c);
 /*FUNCIONES DE GESTIÓN DE ERRORES*/

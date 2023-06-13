@@ -20,8 +20,7 @@ int handlekeys(map *c, char key) {
 		check_coins(c);
 		if (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == '0' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'P' || c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'C' || (c->mapstruct[c->player_y + coordY][c->player_x + coordX] == 'E' && c->coins_gained == c->coins))
 		{
-			ft_printf("\nNúmero de movimientos %i", c->moves);
-			ft_printf("\nCoins %i/%i\n", c->coins_gained, c->coins);
+			ft_printf("\nNúmero de movimientos %i\nCoins %i/%i\n", c->moves, c->coins_gained, c->coins);
 			handlemove(c, coordX, coordY);
 			return (0);
 		}
