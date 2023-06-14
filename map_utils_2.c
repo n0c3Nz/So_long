@@ -26,7 +26,6 @@ int path_finder(in *fw)
     int i;
 	
 	i = 0;
-//	int **visited = malloc(c->lines * sizeof(int *));
 	int **visited = (int **)ft_calloc(fw->map->lines, sizeof(int *));
     while(i < fw->map->lines)
 	{
@@ -48,15 +47,6 @@ int path_finder(in *fw)
 	}
 	free(visited);
 	visited = NULL;  // Poner el puntero a NULL
-
-/* Liberar la memoria de la matriz
-    i = 0;
-	while(i < c->lines){
-        free(visited[i]);
-		i++;
-	}
-	free(visited);*/
-
     return(pathExists);
 }
 int dfs(int row, int col, int **visited, in *fw)
@@ -83,4 +73,22 @@ int dfs(int row, int col, int **visited, in *fw)
         }
     }
     return 0;
+}
+void search_entitys(in *fw, char letter, int e, int num)
+{
+		if (letter == 'P')
+		{
+			fw->player->y = e + 1;
+			fw->player->x = num;
+		}
+		else if (letter == 'S')
+		{
+			fw->snorlax->y = e + 1;
+			fw->snorlax->x = num;
+		}
+		else if (letter == 'D')
+		{
+			fw->ditto->y = e + 1;
+			fw->ditto->x = num;
+		}
 }

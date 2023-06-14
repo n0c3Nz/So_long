@@ -41,43 +41,65 @@ void draw_image(in *fw, void *img_ptr, int start_x, int start_y)
     }
 }
 
-char *getdirectionimage1(int coordx, int coordy){
+char* put_values(char *cadena, entity *entity) {
+    char *copia = ft_strdup(cadena);  // Crear una copia de la cadena original
+
+    //printf("\nDEBUG do_moves:45  CARACTER DE CADENA:       %c       CADENA:        %s\n", copia[8], copia);
+    copia[8] = get_low(entity->value);
+    //printf("\nDEBUG do_moves:47  VALOR DE ENTITY         %c       VALOR EN MINUSCULA       %c\n", entity->value, get_low(entity->value));
+    //printf("\nHOLA\n");
+    //printf("\nDEBUG do_moves:49  CADENA 2:    %s\n", copia);  // DEBUG
+
+    return copia;
+}
+
+char get_low(char letter)
+{
+    if (letter >= 'A' && letter <= 'Z') {
+        return letter + 32;
+    } else {
+        // Si la letra no es mayúscula, se devuelve tal cual
+        return letter;
+    }
+}
+char *getdirectionimage1(entity *entity, int coordx, int coordy){
 	char *imgstep1;
-	imgstep1 = "sprites/p_down_step_t.xpm";//default
+	imgstep1 = put_values("sprites/p_down_step_t.xpm", entity);//default
+	//ft_printf("\nDEBUG do_moves:63	CADENA DE TEXTO:	%s\n", put_values("sprites/p_down_step_t.xpm", entity));//			DEBUG
 	if (coordx == -1) //a
-		imgstep1 = "sprites/p_left_step_t.xpm";
+		imgstep1 = put_values("sprites/p_left_step_t.xpm", entity);
 	else if (coordy == 1) //s
-		imgstep1 = "sprites/p_down_step_t.xpm";
+		imgstep1 = put_values("sprites/p_down_step_t.xpm", entity);
 	else if (coordx == 1) //d
-		imgstep1 = "sprites/p_right_step_t.xpm";
+		imgstep1 = put_values("sprites/p_right_step_t.xpm", entity);
 	else if (coordy == -1) //w
-		imgstep1 = "sprites/p_up_step_t.xpm";
+		imgstep1 = put_values("sprites/p_up_step_t.xpm", entity);
 	return imgstep1;
 }
-char *getdirectionimage2(int coordx, int coordy){
+char *getdirectionimage2(entity *entity, int coordx, int coordy){
 	char *imgstep2;
-	imgstep2 = "sprites/p_down_step_2_t.xpm";//default
+	imgstep2 = put_values("sprites/p_down_step_2_t.xpm", entity);//default
 	if (coordx == -1) //a
-		imgstep2 = "sprites/p_left_step_2_t.xpm";
+		imgstep2 = put_values("sprites/p_left_step_2_t.xpm", entity);
 	else if (coordy == 1) //s
-		imgstep2 = "sprites/p_down_step_2_t.xpm";
+		imgstep2 = put_values("sprites/p_down_step_2_t.xpm", entity);
 	else if (coordx == 1) //d
-		imgstep2 = "sprites/p_right_step_2_t.xpm";
+		imgstep2 = put_values("sprites/p_right_step_2_t.xpm", entity);
 	else if (coordy == -1) //w
-		imgstep2 = "sprites/p_up_step_2_t.xpm";
+		imgstep2 = put_values("sprites/p_up_step_2_t.xpm", entity);
 	return imgstep2;
 }
-char *getdirectionstatic(int coordx, int coordy){
+char *getdirectionstatic(entity *entity, int coordx, int coordy){
 	char *imgstep2;
-	imgstep2 = "sprites/p_down_t.xpm";//default
+	imgstep2 = put_values("sprites/p_down_t.xpm", entity);//default
 	if (coordx == -1) //a
-		imgstep2 = "sprites/p_left_t.xpm";
+		imgstep2 = put_values("sprites/p_left_t.xpm", entity);
 	else if (coordy == 1) //s
-		imgstep2 = "sprites/p_down_t.xpm";
+		imgstep2 = put_values("sprites/p_down_t.xpm", entity);
 	else if (coordx == 1) //d
-		imgstep2 = "sprites/p_right_transparente.xpm";
+		imgstep2 = put_values("sprites/p_right_transparente.xpm", entity);
 	else if (coordy == -1) //w
-		imgstep2 = "sprites/p_up_t.xpm";
+		imgstep2 = put_values("sprites/p_up_t.xpm", entity);
 	return imgstep2;
 }
 float getsumax(int coordx, float lx){
@@ -97,34 +119,39 @@ float getsumay(int coordy, float lx){
 	return sumay;
 }
 int drawcharacter(in *fw, entity *entity, int coordx, int coordy) {
+	entity->stepanimation++;
 	if (entity->stepanimation == 2)
 	{
-		entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionimage2(coordx,coordy), &fw->map->width, &fw->map->height);
+		entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionimage2(entity, coordx, coordy), &fw->map->width, &fw->map->height);
 		mlx_do_sync(fw->map->mlx);
 	}
 	else if (entity->stepanimation == 4)
 	{
-		entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionimage1(coordx,coordy), &fw->map->width, &fw->map->height);
+		entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionimage1(entity, coordx, coordy), &fw->map->width, &fw->map->height);
 		mlx_do_sync(fw->map->mlx);
 		entity->stepanimation = 0;
 	}
-	return (fw->player->stepanimation);
+	return (entity->stepanimation);
 }
-void initplayer(in *fw, int coordx, int coordy) {
-	fw->map->mapstruct[fw->player->y][fw->player->x] = '0';//fallara esto
-	if (fw->map->mapstruct[fw->player->y + coordy][fw->player->x + coordx] != 'E')
-		fw->map->mapstruct[fw->player->y + coordy][fw->player->x + coordx] = 'P';
+void initplayer(in *fw, entity *entity, int coordx, int coordy) {
+	//ft_printf("\nDEBUG 1: %c\n", fw->map->mapstruct[entity->y][entity->x]);
+	fw->map->mapstruct[entity->y][entity->x] = '0';
+	if (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] != 'E')
+		fw->map->mapstruct[entity->y + coordy][entity->x + coordx] = entity->value;
+	//ft_printf("\nDEBUG 2: %c\n", entity->value);
 }
 void handlemove(in *fw, entity *entity, int coordx, int coordy)
 {
-	initplayer(fw, coordx, coordy);
+	//if (entity->value == 'P')
+	initplayer(fw, entity, coordx, coordy);
 	entity->stepanimation = 0;
 	float lx = 0;
 	clock_t inicio = clock();
 	while (lx < 1) {
-		entity->stepanimation++;
+		//ft_printf("\nDEBUG 	do_moves .147	STEPANIMATION:		%i\n", entity->stepanimation);
 		lx += 0.1;
-		entity->stepanimation = drawcharacter(fw, fw->player, coordx, coordy);
+		entity->stepanimation = drawcharacter(fw, entity, coordx, coordy);
+		//if (fw->map->mapstruct[coord])
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, (entity->x + coordx) * BPP, (entity->y + coordy) * BPP);
 		draw_image(fw, entity->ptr, (entity->x + getsumax(coordx, lx)) * BPP, (entity->y + getsumay(coordy, lx)) * BPP);
@@ -134,7 +161,7 @@ void handlemove(in *fw, entity *entity, int coordx, int coordy)
 	entity->x += coordx;
 	entity->y += coordy;
 	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
-	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(coordx, coordy), &fw->map->width, &fw->map->height);// PRUEBA
+	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(entity, coordx, coordy), &fw->map->width, &fw->map->height);// PRUEBA
 	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);	
 	mlx_do_sync(fw->map->mlx);
 }
@@ -166,6 +193,5 @@ int hasEnoughTimeElapsed(void)
         lastKeyPressTime = currentTime;
         return 1; // Ha pasado suficiente tiempo
     }
-
     return 0; // No ha pasado suficiente tiempo
 }

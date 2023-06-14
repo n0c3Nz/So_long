@@ -106,14 +106,15 @@ int process_map_file(in *fw)
 	fw->map->zeros = 0;
 	fw->map->ones = 0;
 	fw->map->exitp = 0;
+	fw->map->enemies = 0;
 	process_line(fd2, fw);
-	if (fw->map->coins < 1 || fw->map->exitp != 1 || fw->map->startp != 1)
+	if (fw->map->coins < 1 || fw->map->exitp != 1 || fw->map->startp != 1 || fw->map->enemies != 2)
 	{
-		perror("Mapa no válido, faltan C ó sobran P ó E");
+		ft_printf("\nMapa no válido\nCoins:\t\t%d\nEnemigos:\t%d\nJugador:\t%d\nSalida:\t\t%d\n", fw->map->coins, fw->map->enemies, fw->map->startp, fw->map->exitp);
 		exit(1);
 	}
-	ft_printf("\nColumnas:\t\t%d\nFilas:\t\t\t%d\nCoins:\t\t\t%d\nUnos:\t\t\t%d\nCeros:\t\t\t%d\nPunto de entrada:\t%d\nPunto de salida:\t%d\n", fw->map->columns, fw->map->lines, fw->map->coins, fw->map->ones, fw->map->zeros, fw->map->startp, fw->map->exitp);// DEBUG
-	ft_printf("\nPosición y: %i\nPosición x: %i\n", fw->player->y, fw->player->x);
+	ft_printf("\nColumnas:\t\t%d\nFilas:\t\t\t%d\nCoins:\t\t\t%d\nUnos:\t\t\t%d\nCeros:\t\t\t%d\nEnemigos:\t\t%d\nPunto de entrada:\t%d\nPunto de salida:\t%d\n", fw->map->columns, fw->map->lines, fw->map->coins, fw->map->ones, fw->map->zeros, fw->map->enemies, fw->map->startp, fw->map->exitp);// DEBUG
+	ft_printf("\n****PLAYER***\nx: %i\ty: %i\n***SNORLAX***\nx: %i\ty: %i\n****DITTO****\nx: %i\ty: %i\n*************\n", fw->player->x, fw->player->y, fw->snorlax->x, fw->snorlax->y, fw->ditto->x, fw->ditto->y);
 	if (!path_finder(fw))
 		exit(1);
 	close(fd2);

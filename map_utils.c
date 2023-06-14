@@ -55,11 +55,7 @@ int body_line_analyzer(char *buffer, in *fw)
 	a++;
 	while(a != (fw->map->columns - 1))
 	{
-		if (buffer[a] == 'P')
-		{
-			fw->player->y = e + 1;
-			fw->player->x = a;
-		}
+		search_entitys(fw, buffer[a], e, a);
 		search_items(buffer[a], fw);//aqui es ir revisando el cuerpo del mapa e ir añadiendo si hay un coin pues coin++;
 		a++;
 	}
@@ -78,6 +74,8 @@ int search_items(char item, in *fw)
 		fw->map->zeros = fw->map->zeros + 1;
 	else if (item == '1')
 		fw->map->ones = fw->map->ones + 1;
+	else if (item == 'S' || item == 'D')
+		fw->map->enemies = fw->map->enemies + 1;
 	else
 	{
 		perror("Carácter no válido en el mapa");

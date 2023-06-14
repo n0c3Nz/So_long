@@ -11,13 +11,14 @@ int mlx_process(in *fw)
 	fw->map->coin_sprite_2 = mlx_xpm_file_to_image(fw->map->mlx, "sprites/coin2.xpm", &fw->map->width, &fw->map->height);
 	fw->map->coin_sprite_3 = mlx_xpm_file_to_image(fw->map->mlx, "sprites/coin3.xpm", &fw->map->width, &fw->map->height);
 	fw->map->coin_ptr = fw->map->coin_sprite_1;
-	fw->player->ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/p_down_t.xpm", &fw->map->width, &fw->map->height); 
+	fw->player->ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/p_down_t.xpm", &fw->map->width, &fw->map->height);
+	fw->snorlax->ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/s_down_t.xpm", &fw->map->width, &fw->map->height);
 	fw->map->moves = 0;
 	fw->map->coins_gained = 0;
 	put_imgs(fw);
 	handlemove(fw, fw->player, 0, 0);
+	handlemove(fw, fw->snorlax, 0, 0);
 	//handlemove(fw, fw->ditto, 0, 0);
-	//handlemove(fw, fw->snorlax, 0, 0);
 	// ft_printf("\nPosición y:%i\nPosición x:%i", fw->map->player_y, fw->map->player_x);
 	return (0);
 }

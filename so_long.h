@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <time.h>//Utilizada para la parte bonus, ANIMACIONES.
+#include <math.h>//Utilizada para el algoritmo a Star.
 #define BUFFER_SIZE 5000
 #define FRAMES_PER_CHANGE 60
 #define BPP 64
@@ -26,6 +27,7 @@ typedef struct{
 	int startp;
 	int	zeros;
 	int ones;
+	int enemies;
 	char *mapstruct[BUFFER_SIZE];
 	void *mlx;
 	void *mlx_win;
@@ -58,6 +60,7 @@ typedef struct{
 	int moves;
 	int endian;
 	int stepanimation;
+	char value;
 }entity;
 
 typedef struct {
@@ -75,15 +78,16 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 /*FUNCION GET_NEXT_LINE*/
 /*char *get_next_line(int fd);*/
 /*FUNCIONES DE MAPA*/
-int process_map_file(in *fw);
 void check_argc(int argc);
 int check_file_extension(char *filename, char *extension);
+int process_map_file(in *fw);
 int line_counter(int fd);
 int process_line(int fd, in *fw);
 int check_line(char *buffer, int *i, in *fw);
 int map_validator(char *buffer, in *fw);
 int first_line_analyzer(char *buffer, in *fw);
 int body_line_analyzer(char *buffer, in *fw);
+void search_entitys(in *fw, char letter, int e, int num);
 int last_line_analyzer(char *buffer, in *fw);
 int search_items(char item, in *fw);
 int path_finder(in *fw);
@@ -109,14 +113,19 @@ int get_pixel_color(void *img_ptr, int x, int y);
 void handlemove(in *fw, entity *entity, int coordx, int coordy);
 int handlekeys(in *fw, char key);
 int check_move(in *fw, int coordX, int coordY);
-char *getdirectionimage1(int coordx, int coordy);
-char *getdirectionimage2(int coordx, int coordy);
+char *getdirectionimage1(entity *entity, int coordx, int coordy);
+char *getdirectionimage2(entity *entity, int coordx, int coordy);
 float getsumax(int coordx, float lx);
 float getsumay(int coordy, float lx);
-char *getdirectionstatic(int coordx, int coordy);
+char *getdirectionstatic(entity *entity, int coordx, int coordy);
 int drawcharacter(in *fw, entity *entity, int coordx, int coordy);
-void initplayer(in *fw, int coordx, int coordy);
+void initplayer(in *fw, entity *entity, int coordx, int coordy);
 char convertirKeyCodeALetra(int keycode);
 int timer(clock_t inicio, double tiempo_deseado);
 int hasEnoughTimeElapsed(void);
+/*BUSQUEDA A* */
+int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player);
+char* put_values(char *cadena, entity *entity);
+char get_low(char letter);
+int getRandomBoolean(void);
 #endif
