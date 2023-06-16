@@ -16,13 +16,11 @@ int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
     // Mover el enemigo en la dirección del jugador
 	if (getRandomBoolean()){
 		posx += (int)round(directionX);
-		ft_printf("\nDIRECCION: %i\n", (int)round(directionX));
 		if (posx == 0) {
 			posy += (int)round(directionY);
 		}
 	} else {
     	posy += (int)round(directionY);
-		ft_printf("\nDIRECCION: %i\n", (int)round(directionY));
 		if (posy == 0){
 			posx += (int)round(directionX);
 		}

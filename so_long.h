@@ -61,6 +61,7 @@ typedef struct{
 	int endian;
 	int stepanimation;
 	char value;
+	int is_wall;
 }entity;
 
 typedef struct {
@@ -123,6 +124,7 @@ void initplayer(in *fw, entity *entity, int coordx, int coordy);
 char convertirKeyCodeALetra(int keycode);
 int timer(clock_t inicio, double tiempo_deseado);
 int hasEnoughTimeElapsed(void);
+void check_next(in *fw, entity *entity, int coordx, int coordy);
 /*BUSQUEDA A* */
 int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player);
 char* put_values(char *cadena, entity *entity);

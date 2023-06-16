@@ -8,10 +8,11 @@ int loop_hook(in *fw)
     if (tiempo_transcurrido >= 0.5) {
         wall_animation(fw);
 		coin_animation(fw);
-        if (fw->snorlax->x != fw->player->x && fw->snorlax->y != fw->player->y){
-			moveEnemyTowardsPlayer(fw, fw->snorlax, fw->player);
-			printf("Posición después de mover el enemigo: (%d, %d)\n", fw->snorlax->x, fw->snorlax->y);
-		}
+        //if ((fw->snorlax->x != fw->player->x && fw->snorlax->y != fw->player->y) || (fw->ditto->x != fw->player->x && fw->ditto->y != fw->player->y)){
+		//moveEnemyTowardsPlayer(fw, fw->snorlax, fw->player);
+		//moveEnemyTowardsPlayer(fw, fw->ditto, fw->player);
+			//printf("Posición después de mover el enemigo: (%d, %d)\n", fw->snorlax->x, fw->snorlax->y);
+		//}
 		fw->map->env_animation = actual;
     }
     return (0);

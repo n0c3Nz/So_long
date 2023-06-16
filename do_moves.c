@@ -142,17 +142,26 @@ void initplayer(in *fw, entity *entity, int coordx, int coordy) {
 }
 void handlemove(in *fw, entity *entity, int coordx, int coordy)
 {
-	//if (entity->value == 'P')
+	//check_next(fw, entity, coordx, coordy);
+	/*if ((entity->value == 'S') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'P'))
+		return;
+	if ((entity->value == 'D') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'P'))
+		return;
+	if ((entity->value == 'S') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'C'))
+		return;
+	if ((entity->value == 'D') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'C'))
+		return;*/
 	initplayer(fw, entity, coordx, coordy);
 	entity->stepanimation = 0;
 	float lx = 0;
 	clock_t inicio = clock();
 	while (lx < 1) {
-		//ft_printf("\nDEBUG 	do_moves .147	STEPANIMATION:		%i\n", entity->stepanimation);
 		lx += 0.1;
 		entity->stepanimation = drawcharacter(fw, entity, coordx, coordy);
-		//if (fw->map->mapstruct[coord])
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
+		//if (entity->is_wall == 1)
+		//	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->wall_ptr, (entity->x + coordx) * BPP, (entity->y + coordy) * BPP);
+		//else
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, (entity->x + coordx) * BPP, (entity->y + coordy) * BPP);
 		draw_image(fw, entity->ptr, (entity->x + getsumax(coordx, lx)) * BPP, (entity->y + getsumay(coordy, lx)) * BPP);
 		mlx_do_sync(fw->map->mlx);
@@ -160,9 +169,13 @@ void handlemove(in *fw, entity *entity, int coordx, int coordy)
 	}
 	entity->x += coordx;
 	entity->y += coordy;
+	//if (entity->is_wall == 1)
+	//	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->wall_ptr, entity->x * BPP, entity->y * BPP);
+	//else
 	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
 	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(entity, coordx, coordy), &fw->map->width, &fw->map->height);// PRUEBA
-	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);	
+	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);
+	entity->is_wall = 0;
 	mlx_do_sync(fw->map->mlx);
 }
 
@@ -194,4 +207,11 @@ int hasEnoughTimeElapsed(void)
         return 1; // Ha pasado suficiente tiempo
     }
     return 0; // No ha pasado suficiente tiempo
+}
+
+void check_next(in *fw, entity *entity, int coordx, int coordy)
+{
+	entity->is_wall = 0;
+	if (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == '1')
+		entity->is_wall = 1;
 }
