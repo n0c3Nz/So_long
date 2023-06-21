@@ -8,7 +8,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <errno.h>
+#include <pthread.h>
 #include <time.h>//Utilizada para la parte bonus, ANIMACIONES.
 #include <math.h>//Utilizada para el algoritmo a Star.
 #define BUFFER_SIZE 5000
@@ -48,6 +50,7 @@ typedef struct{
 	int coins_gained;
 	int endian;
 	clock_t env_animation;//parte bonus
+	int is_w_pressed;
 }map;
 
 typedef struct{
@@ -62,6 +65,7 @@ typedef struct{
 	int stepanimation;
 	char value;
 	int is_wall;
+	clock_t walktimer;
 }entity;
 
 typedef struct {
@@ -71,6 +75,14 @@ typedef struct {
 	entity *snorlax;
 	// Agrega aquí todas las variables que necesitas
 } in;
+
+typedef struct {
+	in *tempfw;
+	entity *tempentity;
+	int coordx;
+	int coordy;
+} tempcajon;
+
 /*FUNCIONES PRINTF*/
 int	ft_printf(const char *fmt, ...);
 /*FUNCIONES LIBFT*/
@@ -124,10 +136,14 @@ void initplayer(in *fw, entity *entity, int coordx, int coordy);
 char convertirKeyCodeALetra(int keycode);
 int timer(clock_t inicio, double tiempo_deseado);
 int hasEnoughTimeElapsed(void);
-void check_next(in *fw, entity *entity, int coordx, int coordy);
 /*BUSQUEDA A* */
 int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player);
 char* put_values(char *cadena, entity *entity);
 char get_low(char letter);
 int getRandomBoolean(void);
+void *bucle_asincrono(void* arg);
+//prueba
+int key_release(int keycode, in *fw);
+bool iswall(in *fw, entity *enemy, int posx, int posy);
+int is_entity(in *fw, int y, int x, int first_time);
 #endif

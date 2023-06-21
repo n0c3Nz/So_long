@@ -14,6 +14,7 @@ int	main(int argc, char **argv)
 	fw.player->value = 'P';
 	fw.snorlax->value = 'S';
 	fw.ditto->value = 'D';
+
 	c.env_animation = clock();
 	c.map_name = argv[1];
 	check_argc(argc);

@@ -97,7 +97,7 @@ char *getdirectionstatic(entity *entity, int coordx, int coordy){
 	else if (coordy == 1) //s
 		imgstep2 = put_values("sprites/p_down_t.xpm", entity);
 	else if (coordx == 1) //d
-		imgstep2 = put_values("sprites/p_right_transparente.xpm", entity);
+		imgstep2 = put_values("sprites/p_right_t.xpm", entity);
 	else if (coordy == -1) //w
 		imgstep2 = put_values("sprites/p_up_t.xpm", entity);
 	return imgstep2;
@@ -140,43 +140,50 @@ void initplayer(in *fw, entity *entity, int coordx, int coordy) {
 		fw->map->mapstruct[entity->y + coordy][entity->x + coordx] = entity->value;
 	//ft_printf("\nDEBUG 2: %c\n", entity->value);
 }
-void handlemove(in *fw, entity *entity, int coordx, int coordy)
-{
-	//check_next(fw, entity, coordx, coordy);
-	/*if ((entity->value == 'S') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'P'))
-		return;
-	if ((entity->value == 'D') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'P'))
-		return;
-	if ((entity->value == 'S') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'C'))
-		return;
-	if ((entity->value == 'D') && (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == 'C'))
-		return;*/
-	initplayer(fw, entity, coordx, coordy);
-	entity->stepanimation = 0;
+
+void *bucle_asincrono(void* arg) {
+	tempcajon* temporal = (tempcajon*)arg;
+	in *fw = temporal->tempfw;
+	entity *entity = temporal->tempentity;
+	int coordx = temporal->coordx;
+	int coordy = temporal->coordy;
 	float lx = 0;
-	clock_t inicio = clock();
 	while (lx < 1) {
 		lx += 0.1;
 		entity->stepanimation = drawcharacter(fw, entity, coordx, coordy);
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
-		//if (entity->is_wall == 1)
-		//	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->wall_ptr, (entity->x + coordx) * BPP, (entity->y + coordy) * BPP);
-		//else
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, (entity->x + coordx) * BPP, (entity->y + coordy) * BPP);
 		draw_image(fw, entity->ptr, (entity->x + getsumax(coordx, lx)) * BPP, (entity->y + getsumay(coordy, lx)) * BPP);
 		mlx_do_sync(fw->map->mlx);
-		inicio = timer(inicio, 0.015);
+
+		usleep(22000);
 	}
 	entity->x += coordx;
 	entity->y += coordy;
-	//if (entity->is_wall == 1)
-	//	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->wall_ptr, entity->x * BPP, entity->y * BPP);
-	//else
 	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);
 	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(entity, coordx, coordy), &fw->map->width, &fw->map->height);// PRUEBA
 	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);
-	entity->is_wall = 0;
 	mlx_do_sync(fw->map->mlx);
+    pthread_exit(NULL);
+}
+
+void handlemove(in *fw, entity *entity, int coordx, int coordy)
+{
+	initplayer(fw, entity, coordx, coordy);
+	entity->stepanimation = 0;
+
+	tempcajon temporal;
+	temporal.tempfw = fw;
+	temporal.tempentity = entity;
+	temporal.coordx = coordx;
+	temporal.coordy = coordy;
+
+	pthread_t hilo;
+    pthread_create(&hilo, NULL, bucle_asincrono, (void*)&temporal);
+	pthread_join(hilo, NULL);
+
+	
+	//moveEnemyTowardsPlayer(fw, fw->snorlax, fw->player);
 }
 
 
@@ -201,17 +208,10 @@ int hasEnoughTimeElapsed(void)
     clock_t currentTime = clock();
     double elapsed = (double)(currentTime - lastKeyPressTime) / CLOCKS_PER_SEC;
 
-    if (elapsed >= 0.035)
+    if (elapsed >= 0.0001)
     {
         lastKeyPressTime = currentTime;
         return 1; // Ha pasado suficiente tiempo
     }
     return 0; // No ha pasado suficiente tiempo
-}
-
-void check_next(in *fw, entity *entity, int coordx, int coordy)
-{
-	entity->is_wall = 0;
-	if (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] == '1')
-		entity->is_wall = 1;
 }

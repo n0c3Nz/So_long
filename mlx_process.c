@@ -17,10 +17,6 @@ int mlx_process(in *fw)
 	fw->map->moves = 0;
 	fw->map->coins_gained = 0;
 	put_imgs(fw);
-	handlemove(fw, fw->player, 0, 0);
-	handlemove(fw, fw->snorlax, 0, 0);
-	handlemove(fw, fw->ditto, 0, 0);
-	// ft_printf("\nPosición y:%i\nPosición x:%i", fw->map->player_y, fw->map->player_x);
 	return (0);
 }
 void put_imgs(in *fw)
@@ -44,6 +40,7 @@ void put_imgs(in *fw)
 }
 void put_item(in *fw, int y, int x)
 {
+	static int first_time;
 	if (fw->map->mapstruct[y][x] == '1')
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->wall_ptr, x * BPP, y * BPP);
 	else if (fw->map->mapstruct[y][x] == '0')
@@ -56,6 +53,7 @@ void put_item(in *fw, int y, int x)
 	}
 	else if (fw->map->mapstruct[y][x] == 'C')
 		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->coin_ptr, x * BPP, y * BPP);
+	first_time = first_time + is_entity(fw, y, x, first_time);
 }
 // Variables globales para el limitador de movimientos.
 clock_t lastKeyPressTime = 0;
@@ -65,21 +63,19 @@ int key_hook(int keycode, in *fw)
 {
 	char letra = convertirKeyCodeALetra(keycode);
 	ft_printf("\nHas pulsado la tecla %c!", letra);
-	if (hasEnoughTimeElapsed())
+	//ft_printf("\nVALOR DE IS W PRESSED: %i\n", fw->map->is_w_pressed);
+	if (keycode == 0x61 || keycode == 0x41 || keycode == 0) // tecla a o A ¡EL ULTIMO ES PARA MAC!.
+		handlekeys(fw, 'a');
+	else if (keycode == 0x73 || keycode == 0x53 || keycode == 1) // tecla s o S
+		handlekeys(fw, 's');
+	else if (keycode == 0x64 || keycode == 0x44 || keycode == 2) // tecla d o D
+		handlekeys(fw, 'd');
+	else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
+		handlekeys(fw, 'w');
+	else
 	{
-		if (keycode == 0x61 || keycode == 0x41 || keycode == 0) // tecla a o A ¡EL ULTIMO ES PARA MAC!.
-			handlekeys(fw, 'a');
-		else if (keycode == 0x73 || keycode == 0x53 || keycode == 1) // tecla s o S
-			handlekeys(fw, 's');
-		else if (keycode == 0x64 || keycode == 0x44 || keycode == 2) // tecla d o D
-			handlekeys(fw, 'd');
-		else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
-			handlekeys(fw, 'w');
-		else
-		{
-			ft_printf("\n¡Tecla inválida!");
-			return (1);
-		}
+		ft_printf("\n¡Tecla inválida!");
+		return (1);
 	}
 	return (0);
 }
@@ -103,4 +99,40 @@ char convertirKeyCodeALetra(int keycode) {
 		return (char)keycode;  // Códigos ASCII para letras minúsculas
     } else
         return '\0';  // Valor nulo para indicar un error
+}
+
+int key_release(int keycode, in *fw)
+{
+	if (keycode == 0x61 || keycode == 0x41 || keycode == 0) // tecla a o A ¡EL ULTIMO ES PARA MAC!.
+		fw->map->is_w_pressed = 0; // Se soltó la tecla "A"
+	else if (keycode == 0x73 || keycode == 0x53 || keycode == 1) // tecla s o S
+		fw->map->is_w_pressed = 0; // Se soltó la tecla "S"
+	else if (keycode == 0x64 || keycode == 0x44 || keycode == 2) // tecla d o D
+		fw->map->is_w_pressed = 0; // Se soltó la tecla "D"
+	else if (keycode == 0x77 || keycode == 0x57 || keycode == 13) // tecla w o W
+		fw->map->is_w_pressed = 0; // Se soltó la tecla "W"*/
+    //ft_printf("\nVALOR DE IS W PRESSED: %i\n", fw->map->is_w_pressed);
+	return 0;
+}
+int is_entity(in *fw, int y, int x, int first_time)
+{
+	if (fw->map->mapstruct[y][x] == 'S' && first_time == 0)
+	{
+		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, x * BPP, y * BPP);
+		draw_image(fw, fw->snorlax->ptr, fw->snorlax->x * BPP, fw->snorlax->y * BPP);
+		return(1);
+	}
+	else if (fw->map->mapstruct[y][x] == 'D' && first_time == 1)
+	{
+		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, x * BPP, y * BPP);
+		draw_image(fw, fw->ditto->ptr, fw->ditto->x * BPP, fw->ditto->y * BPP);
+		return(1);
+	}
+	else if (fw->map->mapstruct[y][x] == 'P' && first_time == 2)
+	{
+		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, x * BPP, y * BPP);
+		draw_image(fw, fw->player->ptr, fw->player->x * BPP, fw->player->y * BPP);
+		return(1);
+	}
+	return(0);
 }

@@ -3,22 +3,35 @@
 int loop_hook(in *fw)
 {
 	clock_t actual = clock();
-    double tiempo_transcurrido = (double)(actual - fw->map->env_animation) / CLOCKS_PER_SEC;
+    //double tiempo_transcurrido = (double)(actual - fw->map->env_animation) / CLOCKS_PER_SEC;
 
-    if (tiempo_transcurrido >= 0.5) {
+	double timerDitto = (double)(actual - fw->ditto->walktimer) / CLOCKS_PER_SEC;
+	if (timerDitto >= 0.2){
+		wall_animation(fw);
+		coin_animation(fw);
+		moveEnemyTowardsPlayer(fw, fw->ditto, fw->player);
+		fw->ditto->walktimer = actual;
+	}
+	double timerSnorkax = (double)(actual - fw->snorlax->walktimer) / CLOCKS_PER_SEC;
+	if (timerSnorkax >= 0.5){
+		moveEnemyTowardsPlayer(fw, fw->snorlax, fw->player);
+		fw->snorlax->walktimer = actual;
+	}
+	/*
+    if (tiempo_transcurrido >= 0.2) {
         wall_animation(fw);
 		coin_animation(fw);
-        //if ((fw->snorlax->x != fw->player->x && fw->snorlax->y != fw->player->y) || (fw->ditto->x != fw->player->x && fw->ditto->y != fw->player->y)){
-		//moveEnemyTowardsPlayer(fw, fw->snorlax, fw->player);
-		//moveEnemyTowardsPlayer(fw, fw->ditto, fw->player);
-			//printf("Posición después de mover el enemigo: (%d, %d)\n", fw->snorlax->x, fw->snorlax->y);
-		//}
+		moveEnemyTowardsPlayer(fw, fw->ditto, fw->player);
 		fw->map->env_animation = actual;
     }
+	else if (tiempo_transcurrido >= 0.5)
+		moveEnemyTowardsPlayer(fw, fw->snorlax, fw->player);
+	*/
     return (0);
 }
-void wall_animation(in *fw)
-{
+void wall_animation(in *fw) {
+	clock_t actual = clock();
+	fw->map->env_animation = actual;
 	if (fw->map->wall_ptr == fw->map->wall_sprite_1)
         fw->map->wall_ptr = fw->map->wall_sprite_2;
     else
