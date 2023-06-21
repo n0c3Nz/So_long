@@ -13,6 +13,7 @@
 #include <pthread.h>
 #include <time.h>//Utilizada para la parte bonus, ANIMACIONES.
 #include <math.h>//Utilizada para el algoritmo a Star.
+#include <X11/Xlib.h>//Utilizada para la gestion del multihilo.
 #define BUFFER_SIZE 5000
 #define FRAMES_PER_CHANGE 60
 #define BPP 64
@@ -60,12 +61,15 @@ typedef struct{
 	void *img;
 	int x;
 	int	y;
+	float xT;
+	float yT;
 	int moves;
 	int endian;
 	int stepanimation;
 	char value;
 	int is_wall;
 	clock_t walktimer;
+	bool iswalking;
 }entity;
 
 typedef struct {
@@ -108,7 +112,6 @@ int dfs(int row, int col, int **visited, in *fw);
 /*FUNCIONES DE GESTION DE GRÁFICOS*/
 int mlx_process(in *fw);
 void put_imgs(in *fw);
-void put_item(in *fw, int y, int x);
 int key_hook(int keycode, in *fw);
 void free_mapstruct(in *fw);
 int loop_hook(in *fw);// PROBANDO
@@ -146,4 +149,5 @@ void *bucle_asincrono(void* arg);
 int key_release(int keycode, in *fw);
 bool iswall(in *fw, entity *enemy, int posx, int posy);
 int is_entity(in *fw, int y, int x, int first_time);
+void put_item_to_buffer(in *fw, int *buffer_data, int y, int x);
 #endif

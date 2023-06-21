@@ -30,7 +30,6 @@ int check_move(in *fw, int coordX, int coordY)
 			ft_printf("\nNúmero de movimientos %i\nCoins %i/%i\n", fw->map->moves, fw->map->coins_gained, fw->map->coins);
 			handlemove(fw, fw->player, coordX, coordY);
 			fw->map->moves += 1;
-			check_e(fw);
 			return (0);
 		}
 	}

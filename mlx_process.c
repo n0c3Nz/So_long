@@ -16,44 +16,71 @@ int mlx_process(in *fw)
 	fw->ditto->ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/d_down_t.xpm", &fw->map->width, &fw->map->height);
 	fw->map->moves = 0;
 	fw->map->coins_gained = 0;
-	put_imgs(fw);
+	handlemove(fw, fw->player, 0, 0);
+	handlemove(fw, fw->snorlax, 0, 0);
+	handlemove(fw, fw->ditto, 0, 0);
 	return (0);
 }
 void put_imgs(in *fw)
 {
-	int y;
-	int x;
-
+	int y, x;
+    void *buffer_image = mlx_new_image(fw->map->mlx, fw->map->columns * BPP, fw->map->lines * BPP);
+	int bpp, size_line, endian;
+    int *buffer_data = (int *)mlx_get_data_addr(buffer_image, &bpp, &size_line, &endian);
 	y = 0;
 	x = 0;
-
 	while (y < fw->map->lines)
 	{
-		while (x < fw->map->columns)
-		{
-			put_item(fw, y, x);
-			x++;
+		put_item_to_buffer(fw, buffer_data, y, x);
+		x++;
+		if (x >= fw->map->columns) {
+			x = 0;
+			y++;
 		}
-		x = 0;
-		y++;
 	}
+    mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, buffer_image, 0, 0);
+	draw_image(fw, fw->ditto->ptr, fw->ditto->xT* BPP, fw->ditto->yT * BPP);
+	draw_image(fw, fw->snorlax->ptr, fw->snorlax->xT * BPP, fw->snorlax->yT * BPP);
+	draw_image(fw, fw->player->ptr, fw->player->xT* BPP, fw->player->yT * BPP);
+	mlx_do_sync(fw->map->mlx);
+    mlx_destroy_image(fw->map->mlx, buffer_image);
 }
-void put_item(in *fw, int y, int x)
+void put_item_to_buffer(in *fw, int *buffer_data, int y, int x)
 {
-	static int first_time;
+    int *image_data;
+    void *image_ptr = NULL;
+    int bpp, size_line, endian;
+
 	if (fw->map->mapstruct[y][x] == '1')
-		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->wall_ptr, x * BPP, y * BPP);
+	 	image_ptr = fw->map->wall_ptr;
 	else if (fw->map->mapstruct[y][x] == '0')
-		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, x * BPP, y * BPP);
+		image_ptr = fw->map->floor_ptr;
+	else if (fw->map->mapstruct[y][x] == 'P' || fw->map->mapstruct[y][x] == 'S' || fw->map->mapstruct[y][x] == 'D')//al agregar nuevos enemigos, poner su letra aqui para saber que estan en la capa del suelo
+		image_ptr = fw->map->floor_ptr;
 	else if (fw->map->mapstruct[y][x] == 'E')
 	{
-		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->exit_ptr, x * BPP, y * BPP);
+		image_ptr = fw->map->exit_ptr;
 		fw->map->exit_x = x;
 		fw->map->exit_y = y;
 	}
 	else if (fw->map->mapstruct[y][x] == 'C')
-		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->coin_ptr, x * BPP, y * BPP);
-	first_time = first_time + is_entity(fw, y, x, first_time);
+		image_ptr = fw->map->coin_ptr;
+    if (image_ptr)
+    {
+        image_data = (int *)mlx_get_data_addr(image_ptr, &bpp, &size_line, &endian);
+        int cell_width = size_line / (bpp / 8);
+        int cell_height = BPP;
+
+        for (int row = 0; row < cell_height; row++) {
+            for (int col = 0; col < cell_width; col++) {
+                int buffer_x = x * cell_width + col;
+                int buffer_y = y * cell_height + row;
+                int image_index = row * cell_width + col;
+                int buffer_index = buffer_y * (fw->map->columns * cell_width) + buffer_x;
+                buffer_data[buffer_index] = image_data[image_index];
+            }
+        }
+    }
 }
 // Variables globales para el limitador de movimientos.
 clock_t lastKeyPressTime = 0;

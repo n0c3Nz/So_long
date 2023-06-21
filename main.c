@@ -14,7 +14,10 @@ int	main(int argc, char **argv)
 	fw.player->value = 'P';
 	fw.snorlax->value = 'S';
 	fw.ditto->value = 'D';
-
+	fw.ditto->iswalking = false;
+	fw.snorlax->iswalking = false;
+	fw.player->iswalking = false;
+	XInitThreads();
 	c.env_animation = clock();
 	c.map_name = argv[1];
 	check_argc(argc);
