@@ -24,8 +24,8 @@ void wall_animation(in *fw) {
 	if (fw->map->wall_ptr == fw->map->wall_sprite_1)
         fw->map->wall_ptr = fw->map->wall_sprite_2;
     else
-        fw->map->wall_ptr = fw->map->wall_sprite_1;
-    put_imgs(fw);
+		fw->map->wall_ptr = fw->map->wall_sprite_1;
+	put_imgs(fw);
 }
 void coin_animation(in *fw) {
   static int a = 0;

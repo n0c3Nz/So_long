@@ -136,8 +136,6 @@ int drawcharacter(in *fw, entity *entity, int coordx, int coordy) {
 void initplayer(in *fw, entity *entity, int coordx, int coordy) {
 	//ft_printf("\nDEBUG 1: %c\n", fw->map->mapstruct[entity->y][entity->x]);
 	fw->map->mapstruct[entity->y][entity->x] = '0';
-	entity->xT = entity->x;
-	entity->yT = entity->y;
 	if (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] != 'E')
 		fw->map->mapstruct[entity->y + coordy][entity->x + coordx] = entity->value;
 	//ft_printf("\nDEBUG 2: %c\n", entity->value);
@@ -150,10 +148,10 @@ void *bucle_asincrono(void* arg) {
 	int coordy = temporal->coordy;
 	free(temporal);
 	float lx = 0;
-	while (lx < 1) {
-		lx += 0.1;
+	while (lx <= 1.1) {
 		entity->xT = (entity->x + getsumax(coordx, lx));
-		entity->yT = (entity->y + getsumax(coordy, lx));
+		entity->yT = (entity->y + getsumay(coordy, lx));
+		lx += 0.1;
 		put_imgs(fw);
 		entity->stepanimation = drawcharacter(fw, entity, coordx, coordy);
 		if (entity->value == 'P')
@@ -163,8 +161,10 @@ void *bucle_asincrono(void* arg) {
 		else if (entity->value == 'S')
 			usleep(40000);
 	}
+	
 	entity->x += coordx;
 	entity->y += coordy;
+	
 	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);//Pone un suelo en la nueva coordenada
 	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(entity, coordx, coordy), &fw->map->width, &fw->map->height);//CARGA LA DIRECCION ESTATICA DEL JUGADOR.
 	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);//Dibuja el paso estatico
@@ -183,7 +183,6 @@ void handlemove(in *fw, entity *entity, int coordx, int coordy)
 	entity->iswalking = true;
 	initplayer(fw, entity, coordx, coordy);
 	entity->stepanimation = 0;
-
 	tempcajon* temporal = (tempcajon*)malloc(sizeof(tempcajon));
 	temporal->tempfw = fw;
     temporal->tempentity = entity;
