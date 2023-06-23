@@ -1,25 +1,25 @@
 #include "so_long.h"
 
-int get_pixel_color(void *img_ptr, int x, int y)
+int	get_pixel_color(void	*img_ptr, int	x, int	y)
 {
-    int bpp;
-    int size_line;
-    int endian;
-    char *img_data;
+    int	bpp;
+    int	size_line;
+    int	endian;
+    char	*img_data;
 
     img_data = mlx_get_data_addr(img_ptr, &bpp, &size_line, &endian);
-    int color = *(int *)(img_data + y * size_line + x * (bpp / 8)); // color del pixel en (x,y)
+    int	color = *(int	*)(img_data + y * size_line + x * (bpp / 8)); // color del pixel en (x,y)
     return color;
 }
 
-void draw_image(in *fw, void *img_ptr, int start_x, int start_y)
+void	draw_image(in *fw, void	*img_ptr, int	start_x, int	start_y)
 {
-    int x;
-	int y;
-    int color;
-	int width;
-	int height;
-	int exclude_color;
+    int	x;
+	int	y;
+    int	color;
+	int	width;
+	int	height;
+	int	exclude_color;
 	width = BPP;
 	height = BPP;
 	exclude_color = get_pixel_color(img_ptr, 0, 0);
@@ -41,8 +41,8 @@ void draw_image(in *fw, void *img_ptr, int start_x, int start_y)
     }
 }
 
-char* put_values(char *cadena, entity *entity) {
-    char *copia = ft_strdup(cadena);  // Crear una copia de la cadena original
+char* put_values(char	*cadena, entity *entity) {
+    char	*copia = ft_strdup(cadena);  // Crear una copia de la cadena original
 
     //printf("\nDEBUG do_moves:45  CARACTER DE CADENA:       %c       CADENA:        %s\n", copia[8], copia);
     copia[8] = get_low(entity->value);
@@ -53,7 +53,7 @@ char* put_values(char *cadena, entity *entity) {
     return copia;
 }
 
-char get_low(char letter)
+char	get_low(char	letter)
 {
     if (letter >= 'A' && letter <= 'Z') {
         return letter + 32;
@@ -62,8 +62,8 @@ char get_low(char letter)
         return letter;
     }
 }
-char *getdirectionimage1(entity *entity, int coordx, int coordy){
-	char *imgstep1;
+char	*getdirectionimage1(entity *entity, int	coordx, int	coordy){
+	char	*imgstep1;
 	imgstep1 = put_values("sprites/p_down_step_t.xpm", entity);//default
 	//ft_printf("\nDEBUG do_moves:63	CADENA DE TEXTO:	%s\n", put_values("sprites/p_down_step_t.xpm", entity));//			DEBUG
 	if (coordx == -1) //a
@@ -76,8 +76,8 @@ char *getdirectionimage1(entity *entity, int coordx, int coordy){
 		imgstep1 = put_values("sprites/p_up_step_t.xpm", entity);
 	return imgstep1;
 }
-char *getdirectionimage2(entity *entity, int coordx, int coordy){
-	char *imgstep2;
+char	*getdirectionimage2(entity *entity, int	coordx, int	coordy){
+	char	*imgstep2;
 	imgstep2 = put_values("sprites/p_down_step_2_t.xpm", entity);//default
 	if (coordx == -1) //a
 		imgstep2 = put_values("sprites/p_left_step_2_t.xpm", entity);
@@ -89,8 +89,8 @@ char *getdirectionimage2(entity *entity, int coordx, int coordy){
 		imgstep2 = put_values("sprites/p_up_step_2_t.xpm", entity);
 	return imgstep2;
 }
-char *getdirectionstatic(entity *entity, int coordx, int coordy){
-	char *imgstep2;
+char	*getdirectionstatic(entity *entity, int	coordx, int	coordy){
+	char	*imgstep2;
 	imgstep2 = put_values("sprites/p_down_t.xpm", entity);//default
 	if (coordx == -1) //a
 		imgstep2 = put_values("sprites/p_left_t.xpm", entity);
@@ -102,23 +102,23 @@ char *getdirectionstatic(entity *entity, int coordx, int coordy){
 		imgstep2 = put_values("sprites/p_up_t.xpm", entity);
 	return imgstep2;
 }
-float getsumax(int coordx, float lx){
-	float sumax = 0;
+float	getsumax(int	coordx, float	lx){
+	float	sumax = 0;
 	if (coordx == -1) //a
 		sumax -= lx;
 	else if (coordx == 1) //d
 		sumax = lx;
 	return sumax;
 }
-float getsumay(int coordy, float lx){
-	float sumay = 0;
+float	getsumay(int	coordy, float	lx){
+	float	sumay = 0;
 	if (coordy == 1) //s
 		sumay = lx;
 	else if (coordy == -1) //w
 		sumay -= lx;
 	return sumay;
 }
-int drawcharacter(in *fw, entity *entity, int coordx, int coordy) {
+int	drawcharacter(in *fw, entity *entity, int	coordx, int	coordy) {
 	entity->stepanimation++;
 	if (entity->stepanimation == 2)
 	{
@@ -133,21 +133,21 @@ int drawcharacter(in *fw, entity *entity, int coordx, int coordy) {
 	}
 	return (entity->stepanimation);
 }
-void initplayer(in *fw, entity *entity, int coordx, int coordy) {
+void	initplayer(in *fw, entity *entity, int	coordx, int	coordy) {
 	//ft_printf("\nDEBUG 1: %c\n", fw->map->mapstruct[entity->y][entity->x]);
 	fw->map->mapstruct[entity->y][entity->x] = '0';
 	if (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] != 'E')
 		fw->map->mapstruct[entity->y + coordy][entity->x + coordx] = entity->value;
 	//ft_printf("\nDEBUG 2: %c\n", entity->value);
 }
-void *bucle_asincrono(void* arg) {
+void	*bucle_asincrono(void* arg) {
 	tempcajon* temporal = (tempcajon*)arg;
 	in *fw = temporal->tempfw;
 	entity *entity = temporal->tempentity;
-	int coordx = temporal->coordx;
-	int coordy = temporal->coordy;
+	int	coordx = temporal->coordx;
+	int	coordy = temporal->coordy;
 	free(temporal);
-	float lx = 0;
+	float	lx = 0;
 	while (lx <= 1.1) {
 		entity->xT = (entity->x + getsumax(coordx, lx));
 		entity->yT = (entity->y + getsumay(coordy, lx));
@@ -175,7 +175,7 @@ void *bucle_asincrono(void* arg) {
 	return NULL;
 }
 
-void handlemove(in *fw, entity *entity, int coordx, int coordy)
+void	handlemove(in *fw, entity *entity, int	coordx, int	coordy)
 {
 	if (entity->iswalking || (coordx == 0 && coordy == 0 && entity->iswalking)){
 		return;
@@ -199,7 +199,7 @@ void handlemove(in *fw, entity *entity, int coordx, int coordy)
 
 /*ESTO ES EL TIMER DE LA ANIMACION*/
 
-int timer(clock_t inicio, double tiempo_deseado)
+int	timer(clock_t inicio, double tiempo_deseado)
 {
 	clock_t actual = clock();
 	double tiempo_transcurrido = (double)(actual - inicio) / CLOCKS_PER_SEC;
@@ -213,7 +213,7 @@ int timer(clock_t inicio, double tiempo_deseado)
 }
 
 /*TIMER PARA DETERMINAR EL INTERVALO DE LOS MOVIMIENTOS DEL JUGADOR*/
-int hasEnoughTimeElapsed(void)
+int	hasEnoughTimeElapsed(void)
 {
     clock_t currentTime = clock();
     double elapsed = (double)(currentTime - lastKeyPressTime) / CLOCKS_PER_SEC;

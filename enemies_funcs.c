@@ -1,9 +1,9 @@
 #include "so_long.h"
 
-int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
+int	moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
 
-	int dx = player->x - enemy->x;
-    int dy = player->y - enemy->y;
+	int	dx = player->x - enemy->x;
+    int	dy = player->y - enemy->y;
 
     // Calcular la distancia euclidiana entre el enemigo y el jugador
     double distance = sqrt(dx*dx + dy*dy);
@@ -12,8 +12,8 @@ int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
     double directionX = dx / distance;
     double directionY = dy / distance;
 
-	int posx = 0;
-	int posy = 0;
+	int	posx = 0;
+	int	posy = 0;
     // Mover el enemigo en la dirección del jugador
 	if (getRandomBoolean()) {
         posx += (int)round(directionX);
@@ -31,7 +31,6 @@ int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
 	if (iswall(fw, enemy, posx, posy) || (posx != 0 && posy != 0)) {
 		posx = posy == 0 ? (getRandomBoolean() ? 1 : -1) : 0;
 		posy = posx == 0 ? (getRandomBoolean() ? 1 : -1) : 0;
-		//posy = (posy != 0) ? posy : (getRandomBoolean() ? 1 : -1);
 	}
 	if ((enemy->x + posx) == player->x && (enemy->y + posy) == player->y){
 		ft_printf("\n¡TE PILLÉ!\n");
@@ -42,12 +41,12 @@ int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
 	}
 	return(1);
 }
-bool iswall(in *fw, entity *enemy, int posx, int posy){
-	if (fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'C' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'D' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'S' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != '1'){
+bool iswall(in *fw, entity *enemy, int	posx, int	posy){
+	if (fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'C' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'D' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'S' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != '1' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'P'){
 		return false;
 	}
 	return true;
 }
-int getRandomBoolean(void) {
+int	getRandomBoolean(void) {
     return rand() % 2;
 }

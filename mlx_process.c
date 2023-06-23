@@ -42,6 +42,8 @@ void put_imgs(in *fw)
 	draw_image(fw, fw->ditto->ptr, fw->ditto->xT* BPP, fw->ditto->yT * BPP);
 	draw_image(fw, fw->snorlax->ptr, fw->snorlax->xT * BPP, fw->snorlax->yT * BPP);
 	draw_image(fw, fw->player->ptr, fw->player->xT* BPP, fw->player->yT * BPP);
+	draw_image(fw, fw->map->coin_ptr, 100, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI
+	draw_image(fw, fw->map->coin_ptr, 80, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI Y VER SI SE PUEDEN SUPERPONER LOS NUMEROS!!!
 	mlx_do_sync(fw->map->mlx);
     mlx_destroy_image(fw->map->mlx, buffer_image);
 }
@@ -65,6 +67,8 @@ void put_item_to_buffer(in *fw, int *buffer_data, int y, int x)
 	}
 	else if (fw->map->mapstruct[y][x] == 'C')
 		image_ptr = fw->map->coin_ptr;
+	else 
+		image_ptr = fw->map->floor_ptr;
     if (image_ptr)
     {
         image_data = (int *)mlx_get_data_addr(image_ptr, &bpp, &size_line, &endian);

@@ -34,7 +34,7 @@ int first_line_analyzer(char *buffer, in *fw)
 		}
 		a++;
 	}
-	if (a < 3)
+	if (a < 4)
 	{
 		perror("Mapa demasiado pequeño");
 		exit(1);

@@ -1,9 +1,8 @@
 #include "so_long.h"
 
-int loop_hook(in *fw)
+int	loop_hook(in *fw)
 {
 	clock_t actual = clock();
-
 	double timerDitto = (double)(actual - fw->ditto->walktimer) / CLOCKS_PER_SEC;
 	if (timerDitto >= 0.2){
 		moveEnemyTowardsPlayer(fw, fw->ditto, fw->player);
@@ -18,7 +17,7 @@ int loop_hook(in *fw)
 	}
     return (0);
 }
-void wall_animation(in *fw) {
+void	wall_animation(in *fw) {
 	clock_t actual = clock();
 	fw->map->env_animation = actual;
 	if (fw->map->wall_ptr == fw->map->wall_sprite_1)
@@ -27,8 +26,8 @@ void wall_animation(in *fw) {
 		fw->map->wall_ptr = fw->map->wall_sprite_1;
 	put_imgs(fw);
 }
-void coin_animation(in *fw) {
-  static int a = 0;
+void	coin_animation(in *fw) {
+  static int	a = 0;
     if (fw->map->coin_ptr == fw->map->coin_sprite_1 && a == 0) {
       fw->map->coin_ptr = fw->map->coin_sprite_2;
       a++;
@@ -45,7 +44,7 @@ void coin_animation(in *fw) {
 		fw->map->coin_ptr = fw->map->coin_sprite_1;
 	put_imgs(fw);
 }
-void check_coins(in *fw)
+void	check_coins(in *fw)
 {
 	if (fw->map->coins_gained >= fw->map->coins){
 		fw->map->exit_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/exit_open.xpm", &fw->map->width, &fw->map->height);

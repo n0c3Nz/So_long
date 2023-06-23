@@ -1,8 +1,8 @@
 #include "so_long.h"
 
-int last_line_analyzer(char *buffer, in *fw)
+int	last_line_analyzer(char	*buffer, in *fw)
 {
-	int a;
+	int	a;
 	a = 0;
 	if (ft_strlen(buffer) != (size_t)fw->map->columns)
 	{
@@ -21,18 +21,18 @@ int last_line_analyzer(char *buffer, in *fw)
 	return(0);
 }
 
-int path_finder(in *fw)
+int	path_finder(in *fw)
 {
-    int i;
+    int	i;
 	
 	i = 0;
-	int **visited = (int **)ft_calloc(fw->map->lines, sizeof(int *));
+	int	**visited = (int **)ft_calloc(fw->map->lines, sizeof(int	*));
     while(i < fw->map->lines)
 	{
         visited[i] = ft_calloc(fw->map->columns, sizeof(int));
 		i++;
 	}
-    int pathExists = dfs(fw->player->y, fw->player->x, visited, fw);
+    int	pathExists = dfs(fw->player->y, fw->player->x, visited, fw);
     if (pathExists)
         printf("\nHay un camino posible desde 'P' a 'E'.\n");
 	else
@@ -49,7 +49,7 @@ int path_finder(in *fw)
 	visited = NULL;  // Poner el puntero a NULL
     return(pathExists);
 }
-int dfs(int row, int col, int **visited, in *fw)
+int	dfs(int	row, int	col, int	**visited, in *fw)
 {
     // Verificar si estamos fuera de los límites del mapa
 	if (row < 0 || row >= fw->map->lines || col < 0 || col >= fw->map->columns)
@@ -74,7 +74,7 @@ int dfs(int row, int col, int **visited, in *fw)
     }
     return 0;
 }
-void search_entitys(in *fw, char letter, int e, int num)
+void	search_entitys(in *fw, char	letter, int	e, int	num)
 {
 		if (letter == 'P')
 		{
