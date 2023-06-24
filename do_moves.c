@@ -155,7 +155,7 @@ void	*bucle_asincrono(void* arg) {
 		put_imgs(fw);
 		entity->stepanimation = drawcharacter(fw, entity, coordx, coordy);
 		if (entity->value == 'P')
-			usleep(10000);
+			usleep(25000);
 		else if (entity->value == 'D')
 			usleep(24000);
 		else if (entity->value == 'S')

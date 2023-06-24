@@ -27,7 +27,7 @@ int mlx_process(in *fw)
 	fw->ditto->ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/d_down_t.xpm", &fw->map->width, &fw->map->height);
 	fw->map->moves = 0;
 	fw->map->coins_gained = 0;
-	ft_printf("\n\nESTE ES EL VALOR DE WIDTH MOVE; %i\n", fw->count->widthmove);
+	//ft_printf("\n\nESTE ES EL VALOR DE WIDTH MOVE; %i\n", fw->count->widthmove);//	DEBUG
 	handlemove(fw, fw->player, 0, 0);
 	handlemove(fw, fw->snorlax, 0, 0);
 	handlemove(fw, fw->ditto, 0, 0);
@@ -57,7 +57,7 @@ void put_imgs(in *fw)
 	draw_image(fw, fw->player->ptr, fw->player->xT* BPP, fw->player->yT * BPP);
 	//draw_image(fw, fw->map->coin_ptr, 100, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI
 	//draw_image(fw, fw->map->coin_ptr, 80, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI Y VER SI SE PUEDEN SUPERPONER LOS NUMEROS!!!
-	//mlx_do_sync(fw->map->mlx);//HE PROBADO A QUITAR ESTO Y EN EL PORTATIL TIENE MENOS BUG VISUAL DE CHIRIBITAS.
+	mlx_do_sync(fw->map->mlx);//HE PROBADO A QUITAR ESTO Y EN EL PORTATIL TIENE MENOS BUG VISUAL DE CHIRIBITAS.
     mlx_destroy_image(fw->map->mlx, buffer_image);
 }
 void put_item_to_buffer(in *fw, int *buffer_data, int y, int x)
@@ -186,35 +186,50 @@ int agregarCeros(in *fw) {
         ft_printf("El número está fuera del rango válido (0-999).\n");
         exit(1);//ESTO PODRIA FALLAR CUIDADITO.
     }
-
-    if (fw->map->moves < 10) {
-		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + 32), (fw->map->lines - 0.92) * BPP);
-		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + 64), (fw->map->lines - 0.92) * BPP);
-        if (fw->map->moves == 0)
-			draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-        else if (fw->map->moves == 1)
-			draw_image(fw, fw->count->one_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-        else if (fw->map->moves == 2)
-			draw_image(fw, fw->count->two_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-        else if (fw->map->moves == 3)
-			draw_image(fw, fw->count->three_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-        else if (fw->map->moves == 4)
-			draw_image(fw, fw->count->four_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-        else if (fw->map->moves == 5)
-			draw_image(fw, fw->count->five_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-        else if (fw->map->moves == 6)
-			draw_image(fw, fw->count->six_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-        else if (fw->map->moves == 7)
-			draw_image(fw, fw->count->seven_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-		else if (fw->map->moves == 8)
-			draw_image(fw, fw->count->eight_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-		else if (fw->map->moves == 9)
-			draw_image(fw, fw->count->nine_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
-    } else if (fw->map->moves < 100) {
-        ft_printf("hola que onda\n");
-    } else {
-        ft_printf("como están los maquinas.\n");
-    }
-
+	int unidad, centena, decena;
+	unidad = 96;
+	decena = 64;
+	centena = 32;
+	int u, c, d;
+	c = fw->map->moves / 100;
+	d = (fw->map->moves / 10) % 10;
+	u = fw->map->moves % 10;
+	if (fw->map->moves < 10){
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + centena), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + decena), (fw->map->lines - 0.92) * BPP);
+		put_number(fw, fw->map->moves, unidad);
+	}
+	if (fw->map->moves < 100){
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + centena), (fw->map->lines - 0.92) * BPP);
+		put_number(fw, d, decena);
+		put_number(fw, u, unidad);
+	}else{
+		put_number(fw, c, centena);
+		put_number(fw, d, decena);
+		put_number(fw, u, unidad);
+	}
     return(0);
+}
+
+void put_number(in *fw, int number, int position){
+	if (number == 0)
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+    else if (number == 1)
+		draw_image(fw, fw->count->one_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+    else if (number == 2)
+		draw_image(fw, fw->count->two_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+    else if (number == 3)
+		draw_image(fw, fw->count->three_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+    else if (number == 4)
+		draw_image(fw, fw->count->four_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+    else if (number == 5)
+		draw_image(fw, fw->count->five_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+    else if (number == 6)
+		draw_image(fw, fw->count->six_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+    else if (number == 7)
+		draw_image(fw, fw->count->seven_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+	else if (number == 8)
+		draw_image(fw, fw->count->eight_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+	else if (number == 9)
+		draw_image(fw, fw->count->nine_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
 }

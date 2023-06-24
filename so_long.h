@@ -171,4 +171,5 @@ void put_item_to_buffer(in *fw, int *buffer_data, int y, int x);
 //int put_counter(in *fw);
 int agregarCeros(in *fw);
 void draw_counter(in *fw, void	*img_ptr, int	start_x, int	start_y);
+void put_number(in *fw, int number, int position);
 #endif
