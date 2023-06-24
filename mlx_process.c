@@ -2,6 +2,17 @@
 
 int mlx_process(in *fw)
 {
+	fw->count->zero_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/0.xpm", &fw->count->width, &fw->count->height);
+	fw->count->one_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/1.xpm", &fw->count->width, &fw->count->height);
+	fw->count->two_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/2.xpm", &fw->count->width, &fw->count->height);
+	fw->count->three_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/3.xpm", &fw->count->width, &fw->count->height);
+	fw->count->four_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/4.xpm", &fw->count->width, &fw->count->height);
+	fw->count->five_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/5.xpm", &fw->count->width, &fw->count->height);
+	fw->count->six_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/6.xpm", &fw->count->width, &fw->count->height);
+	fw->count->seven_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/7.xpm", &fw->count->width, &fw->count->height);
+	fw->count->eight_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/8.xpm", &fw->count->width, &fw->count->height);
+	fw->count->nine_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/9.xpm", &fw->count->width, &fw->count->height);
+	fw->count->move_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/moves.xpm", &fw->count->widthmove, &fw->count->heightmove);
 	fw->map->wall_sprite_1 = mlx_xpm_file_to_image(fw->map->mlx, "sprites/wall.xpm", &fw->map->width, &fw->map->height);
 	fw->map->wall_sprite_2 = mlx_xpm_file_to_image(fw->map->mlx, "sprites/wall2.xpm", &fw->map->width, &fw->map->height);
 	fw->map->wall_ptr = fw->map->wall_sprite_1;
@@ -16,6 +27,7 @@ int mlx_process(in *fw)
 	fw->ditto->ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/d_down_t.xpm", &fw->map->width, &fw->map->height);
 	fw->map->moves = 0;
 	fw->map->coins_gained = 0;
+	ft_printf("\n\nESTE ES EL VALOR DE WIDTH MOVE; %i\n", fw->count->widthmove);
 	handlemove(fw, fw->player, 0, 0);
 	handlemove(fw, fw->snorlax, 0, 0);
 	handlemove(fw, fw->ditto, 0, 0);
@@ -41,9 +53,11 @@ void put_imgs(in *fw)
     mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, buffer_image, 0, 0);
 	draw_image(fw, fw->ditto->ptr, fw->ditto->xT* BPP, fw->ditto->yT * BPP);
 	draw_image(fw, fw->snorlax->ptr, fw->snorlax->xT * BPP, fw->snorlax->yT * BPP);
+	agregarCeros(fw);
 	draw_image(fw, fw->player->ptr, fw->player->xT* BPP, fw->player->yT * BPP);
-	draw_image(fw, fw->map->coin_ptr, 100, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI
-	draw_image(fw, fw->map->coin_ptr, 80, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI Y VER SI SE PUEDEN SUPERPONER LOS NUMEROS!!!
+	draw_counter(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - fw->count->width, (fw->map->lines - 1) * BPP);
+	//draw_image(fw, fw->map->coin_ptr, 100, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI
+	//draw_image(fw, fw->map->coin_ptr, 80, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI Y VER SI SE PUEDEN SUPERPONER LOS NUMEROS!!!
 	mlx_do_sync(fw->map->mlx);
     mlx_destroy_image(fw->map->mlx, buffer_image);
 }
@@ -166,4 +180,42 @@ int is_entity(in *fw, int y, int x, int first_time)
 		return(1);
 	}
 	return(0);
+}
+int agregarCeros(in *fw) {
+	//draw_image(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - 192 , (fw->map->lines - 1) * BPP);
+	if (fw->map->moves < 0 || fw->map->moves > 999) {
+        ft_printf("El número está fuera del rango válido (0-999).\n");
+        exit(1);//ESTO PODRIA FALLAR CUIDADITO.
+    }
+
+    if (fw->map->moves < 10) {
+		draw_image(fw, fw->count->zero_ptr, 80, (fw->map->lines - 1) * BPP);
+		draw_image(fw, fw->count->zero_ptr, 100, (fw->map->lines - 1) * BPP);
+        if (fw->map->moves == 0)
+			draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2), (fw->map->lines - 1) * BPP);
+        else if (fw->map->moves == 1)
+			draw_image(fw, fw->count->one_ptr, 120, (fw->map->lines - 1) * BPP);
+        else if (fw->map->moves == 2)
+			draw_image(fw, fw->count->two_ptr, 120, (fw->map->lines - 1) * BPP);
+        else if (fw->map->moves == 3)
+			draw_image(fw, fw->count->three_ptr, 120, (fw->map->lines - 1) * BPP);
+        else if (fw->map->moves == 4)
+			draw_image(fw, fw->count->four_ptr, 120, (fw->map->lines - 1) * BPP);
+        else if (fw->map->moves == 5)
+			draw_image(fw, fw->count->five_ptr, 120, (fw->map->lines - 1) * BPP);
+        else if (fw->map->moves == 6)
+			draw_image(fw, fw->count->six_ptr, 120, (fw->map->lines - 1) * BPP);
+        else if (fw->map->moves == 7)
+			draw_image(fw, fw->count->seven_ptr, 120, (fw->map->lines - 1) * BPP);
+		else if (fw->map->moves == 8)
+			draw_image(fw, fw->count->eight_ptr, 120, (fw->map->lines - 1) * BPP);
+		else if (fw->map->moves == 9)
+			draw_image(fw, fw->count->nine_ptr, 120, (fw->map->lines - 1) * BPP);
+    } else if (fw->map->moves < 100) {
+        ft_printf("hola que onda\n");
+    } else {
+        ft_printf("como están los maquinas.\n");
+    }
+
+    return(0);
 }

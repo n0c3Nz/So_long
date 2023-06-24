@@ -5,7 +5,7 @@ int	get_pixel_color(void	*img_ptr, int	x, int	y)
     int	bpp;
     int	size_line;
     int	endian;
-    char	*img_data;
+    char *img_data;
 
     img_data = mlx_get_data_addr(img_ptr, &bpp, &size_line, &endian);
     int	color = *(int	*)(img_data + y * size_line + x * (bpp / 8)); // color del pixel en (x,y)
@@ -41,8 +41,8 @@ void	draw_image(in *fw, void	*img_ptr, int	start_x, int	start_y)
     }
 }
 
-char* put_values(char	*cadena, entity *entity) {
-    char	*copia = ft_strdup(cadena);  // Crear una copia de la cadena original
+char* put_values(char *cadena, entity *entity) {
+    char *copia = ft_strdup(cadena);  // Crear una copia de la cadena original
 
     //printf("\nDEBUG do_moves:45  CARACTER DE CADENA:       %c       CADENA:        %s\n", copia[8], copia);
     copia[8] = get_low(entity->value);
@@ -53,7 +53,7 @@ char* put_values(char	*cadena, entity *entity) {
     return copia;
 }
 
-char	get_low(char	letter)
+char get_low(char letter)
 {
     if (letter >= 'A' && letter <= 'Z') {
         return letter + 32;
@@ -62,8 +62,8 @@ char	get_low(char	letter)
         return letter;
     }
 }
-char	*getdirectionimage1(entity *entity, int	coordx, int	coordy){
-	char	*imgstep1;
+char *getdirectionimage1(entity *entity, int	coordx, int	coordy){
+	char *imgstep1;
 	imgstep1 = put_values("sprites/p_down_step_t.xpm", entity);//default
 	//ft_printf("\nDEBUG do_moves:63	CADENA DE TEXTO:	%s\n", put_values("sprites/p_down_step_t.xpm", entity));//			DEBUG
 	if (coordx == -1) //a
@@ -76,8 +76,8 @@ char	*getdirectionimage1(entity *entity, int	coordx, int	coordy){
 		imgstep1 = put_values("sprites/p_up_step_t.xpm", entity);
 	return imgstep1;
 }
-char	*getdirectionimage2(entity *entity, int	coordx, int	coordy){
-	char	*imgstep2;
+char *getdirectionimage2(entity *entity, int	coordx, int	coordy){
+	char *imgstep2;
 	imgstep2 = put_values("sprites/p_down_step_2_t.xpm", entity);//default
 	if (coordx == -1) //a
 		imgstep2 = put_values("sprites/p_left_step_2_t.xpm", entity);
@@ -89,8 +89,8 @@ char	*getdirectionimage2(entity *entity, int	coordx, int	coordy){
 		imgstep2 = put_values("sprites/p_up_step_2_t.xpm", entity);
 	return imgstep2;
 }
-char	*getdirectionstatic(entity *entity, int	coordx, int	coordy){
-	char	*imgstep2;
+char *getdirectionstatic(entity *entity, int	coordx, int	coordy){
+	char *imgstep2;
 	imgstep2 = put_values("sprites/p_down_t.xpm", entity);//default
 	if (coordx == -1) //a
 		imgstep2 = put_values("sprites/p_left_t.xpm", entity);
@@ -224,4 +224,34 @@ int	hasEnoughTimeElapsed(void)
         return 1; // Ha pasado suficiente tiempo
     }
     return 0; // No ha pasado suficiente tiempo
+}
+
+
+void	draw_counter(in *fw, void	*img_ptr, int	start_x, int	start_y)
+{
+    int	x;
+	int	y;
+    int	color;
+	int	width;
+	int	height;
+	int	exclude_color;
+	width = fw->count->widthmove;
+	height = fw->count->heightmove;
+	exclude_color = get_pixel_color(img_ptr, 0, 0);
+	//ft_printf("\nValor del pixel = %i\n", exclude_color); 		DEBUG
+    y = 0;
+    while (y < height)
+    {
+        x = 0;
+        while (x < width)
+        {
+            color = get_pixel_color(img_ptr, x, y);
+            if (color != exclude_color) // si el color no es el color excluido
+            {
+                mlx_pixel_put(fw->map->mlx, fw->map->mlx_win, start_x + x, start_y + y, color);
+            }
+            x++;
+        }
+        y++;
+    }
 }

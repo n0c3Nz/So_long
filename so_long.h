@@ -71,12 +71,30 @@ typedef struct{
 	clock_t walktimer;
 	bool iswalking;
 }entity;
+typedef struct{
+	void *zero_ptr;
+	void *one_ptr;
+	void *two_ptr;
+	void *three_ptr;
+	void *four_ptr;
+	void *five_ptr;
+	void *six_ptr;
+	void *seven_ptr;
+	void *eight_ptr;
+	void *nine_ptr;
+	void *move_ptr;
+	int width;
+	int height;
+	int widthmove;
+	int heightmove;
+}counter;
 
 typedef struct {
 	map *map;
 	entity *player;
 	entity *ditto;
 	entity *snorlax;
+	counter *count;
 	// Agrega aquí todas las variables que necesitas
 } in;
 
@@ -150,4 +168,7 @@ int key_release(int keycode, in *fw);
 bool iswall(in *fw, entity *enemy, int posx, int posy);
 int is_entity(in *fw, int y, int x, int first_time);
 void put_item_to_buffer(in *fw, int *buffer_data, int y, int x);
+//int put_counter(in *fw);
+int agregarCeros(in *fw);
+void draw_counter(in *fw, void	*img_ptr, int	start_x, int	start_y);
 #endif

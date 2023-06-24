@@ -4,7 +4,7 @@ archivos_c=$(find . -maxdepth 1 -type f -name "*.c")
 
 for archivo in $archivos_c; do
   echo "📁 $archivo"
-  funciones_encontradas=$(grep -E "^(int|float|char|double|void)[[:space:]]+.*" "$archivo")
+  funciones_encontradas=$(grep -E "^(int|float|char|double|void|bool)[[:space:]]+.*" "$archivo")
 
   if [ -z "$funciones_encontradas" ]; then
     echo "❌ Empty"

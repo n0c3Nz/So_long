@@ -7,6 +7,8 @@ int	main(int argc, char **argv)
 	entity ditto;
 	entity snorlax;
 	in fw;//Framework
+	counter count;
+	fw.count = &count;
 	fw.map = &c;
 	fw.player = &player;
 	fw.ditto = &ditto;
