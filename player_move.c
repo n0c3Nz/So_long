@@ -20,7 +20,7 @@ int handlekeys(in *fw, char key)
 
 int check_move(in *fw, int coordX, int coordY)
 {
-	ft_printf("\nVALOR DE LA SIGUIENTE CASILLA: %c\n",fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX]);
+	//ft_printf("\nVALOR DE LA SIGUIENTE CASILLA: %c\n",fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX]);//  DEBUG
 	if (fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] != '1')
 	{
 		if (fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX] == 'C'){
