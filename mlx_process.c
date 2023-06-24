@@ -53,7 +53,7 @@ void put_imgs(in *fw)
     mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, buffer_image, 0, 0);
 	draw_image(fw, fw->ditto->ptr, fw->ditto->xT* BPP, fw->ditto->yT * BPP);
 	draw_image(fw, fw->snorlax->ptr, fw->snorlax->xT * BPP, fw->snorlax->yT * BPP);
-	//agregarCeros(fw);
+	agregarCeros(fw);
 	draw_image(fw, fw->player->ptr, fw->player->xT* BPP, fw->player->yT * BPP);
 	//draw_image(fw, fw->map->coin_ptr, 100, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI
 	//draw_image(fw, fw->map->coin_ptr, 80, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI Y VER SI SE PUEDEN SUPERPONER LOS NUMEROS!!!
@@ -181,35 +181,35 @@ int is_entity(in *fw, int y, int x, int first_time)
 	return(0);
 }
 int agregarCeros(in *fw) {
-	//draw_counter(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - fw->count->width, (fw->map->lines - 1) * BPP);
+	draw_counter(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - fw->count->widthmove / 1.45, (fw->map->lines - 1) * BPP);
 	if (fw->map->moves < 0 || fw->map->moves > 999) {
         ft_printf("El número está fuera del rango válido (0-999).\n");
         exit(1);//ESTO PODRIA FALLAR CUIDADITO.
     }
 
     if (fw->map->moves < 10) {
-		draw_image(fw, fw->count->zero_ptr, 80, (fw->map->lines - 1) * BPP);
-		draw_image(fw, fw->count->zero_ptr, 100, (fw->map->lines - 1) * BPP);
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + 32), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + 64), (fw->map->lines - 0.92) * BPP);
         if (fw->map->moves == 0)
-			draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2), (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
         else if (fw->map->moves == 1)
-			draw_image(fw, fw->count->one_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->one_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
         else if (fw->map->moves == 2)
-			draw_image(fw, fw->count->two_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->two_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
         else if (fw->map->moves == 3)
-			draw_image(fw, fw->count->three_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->three_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
         else if (fw->map->moves == 4)
-			draw_image(fw, fw->count->four_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->four_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
         else if (fw->map->moves == 5)
-			draw_image(fw, fw->count->five_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->five_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
         else if (fw->map->moves == 6)
-			draw_image(fw, fw->count->six_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->six_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
         else if (fw->map->moves == 7)
-			draw_image(fw, fw->count->seven_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->seven_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
 		else if (fw->map->moves == 8)
-			draw_image(fw, fw->count->eight_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->eight_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
 		else if (fw->map->moves == 9)
-			draw_image(fw, fw->count->nine_ptr, 120, (fw->map->lines - 1) * BPP);
+			draw_image(fw, fw->count->nine_ptr, (fw->map->columns * BPP / 2 + 96), (fw->map->lines - 0.92) * BPP);
     } else if (fw->map->moves < 100) {
         ft_printf("hola que onda\n");
     } else {
