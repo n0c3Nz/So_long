@@ -42,7 +42,7 @@ int	moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
 	return(1);
 }
 bool iswall(in *fw, entity *enemy, int	posx, int	posy){
-	if (fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'C' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'D' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'S' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != '1' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'P'){
+	if (fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'C' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'D' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'S' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != '1' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'P' && fw->map->mapstruct[enemy->y + posy][enemy->x + posx] != 'E'){
 		return false;
 	}
 	return true;

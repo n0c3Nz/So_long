@@ -53,12 +53,11 @@ void put_imgs(in *fw)
     mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, buffer_image, 0, 0);
 	draw_image(fw, fw->ditto->ptr, fw->ditto->xT* BPP, fw->ditto->yT * BPP);
 	draw_image(fw, fw->snorlax->ptr, fw->snorlax->xT * BPP, fw->snorlax->yT * BPP);
-	agregarCeros(fw);
+	//agregarCeros(fw);
 	draw_image(fw, fw->player->ptr, fw->player->xT* BPP, fw->player->yT * BPP);
-	draw_counter(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - fw->count->width, (fw->map->lines - 1) * BPP);
 	//draw_image(fw, fw->map->coin_ptr, 100, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI
 	//draw_image(fw, fw->map->coin_ptr, 80, (fw->map->lines - 1) * BPP);//ESTO ES PARA VER SI PUEDO PONER LA IMAGEN DEL CONTADOR AQUI Y VER SI SE PUEDEN SUPERPONER LOS NUMEROS!!!
-	mlx_do_sync(fw->map->mlx);
+	//mlx_do_sync(fw->map->mlx);//HE PROBADO A QUITAR ESTO Y EN EL PORTATIL TIENE MENOS BUG VISUAL DE CHIRIBITAS.
     mlx_destroy_image(fw->map->mlx, buffer_image);
 }
 void put_item_to_buffer(in *fw, int *buffer_data, int y, int x)
@@ -182,7 +181,7 @@ int is_entity(in *fw, int y, int x, int first_time)
 	return(0);
 }
 int agregarCeros(in *fw) {
-	//draw_image(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - 192 , (fw->map->lines - 1) * BPP);
+	//draw_counter(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - fw->count->width, (fw->map->lines - 1) * BPP);
 	if (fw->map->moves < 0 || fw->map->moves > 999) {
         ft_printf("El número está fuera del rango válido (0-999).\n");
         exit(1);//ESTO PODRIA FALLAR CUIDADITO.

@@ -134,7 +134,7 @@ int	drawcharacter(in *fw, entity *entity, int	coordx, int	coordy) {
 	return (entity->stepanimation);
 }
 void	initplayer(in *fw, entity *entity, int	coordx, int	coordy) {
-	//ft_printf("\nDEBUG 1: %c\n", fw->map->mapstruct[entity->y][entity->x]);
+	//ft_printf("\nDEBUG 1: %c\n", fw->map->mapstruct[entity->y + coordy][entity->x + coordx]);
 	fw->map->mapstruct[entity->y][entity->x] = '0';
 	if (fw->map->mapstruct[entity->y + coordy][entity->x + coordx] != 'E')
 		fw->map->mapstruct[entity->y + coordy][entity->x + coordx] = entity->value;
@@ -155,7 +155,7 @@ void	*bucle_asincrono(void* arg) {
 		put_imgs(fw);
 		entity->stepanimation = drawcharacter(fw, entity, coordx, coordy);
 		if (entity->value == 'P')
-			usleep(20000);
+			usleep(10000);
 		else if (entity->value == 'D')
 			usleep(24000);
 		else if (entity->value == 'S')
@@ -168,7 +168,7 @@ void	*bucle_asincrono(void* arg) {
 	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);//Pone un suelo en la nueva coordenada
 	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(entity, coordx, coordy), &fw->map->width, &fw->map->height);//CARGA LA DIRECCION ESTATICA DEL JUGADOR.
 	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);//Dibuja el paso estatico
-	mlx_do_sync(fw->map->mlx);
+	mlx_do_sync(fw->map->mlx);// HE PROBADO A QUITAR ESTO Y EN EL PORTATIL TIENE MENOS BUG VISUAL DE CHIRIBITAS.
 	entity->iswalking = false;
 	check_e(fw);
 	pthread_exit(NULL);

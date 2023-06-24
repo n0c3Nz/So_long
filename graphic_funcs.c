@@ -2,6 +2,7 @@
 
 int	loop_hook(in *fw)
 {
+	//put_imgs(fw);//ESTO ES UNA PRUEBA PARA VER SI ACTUALIZA TODO EL RATO LA PANTALLA.
 	clock_t actual = clock();
 	double timerDitto = (double)(actual - fw->ditto->walktimer) / CLOCKS_PER_SEC;
 	if (timerDitto >= 0.2){
@@ -17,6 +18,7 @@ int	loop_hook(in *fw)
 	}
     return (0);
 }
+
 void	wall_animation(in *fw) {
 	clock_t actual = clock();
 	fw->map->env_animation = actual;
