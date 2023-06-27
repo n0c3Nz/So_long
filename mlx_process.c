@@ -180,8 +180,14 @@ int is_entity(in *fw, int y, int x, int first_time)
 	}
 	return(0);
 }
-int agregarCeros(in *fw) {
-	draw_counter(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - fw->count->widthmove / 1.45, (fw->map->lines - 1) * BPP);
+int agregarCeros(in *fw)
+{
+	//draw_counter(fw, fw->count->move_ptr, (fw->map->columns * BPP / 2) - fw->count->widthmove / 1.45, (fw->map->lines) * BPP);
+	int j = 0;
+	while (j <= fw->map->columns){
+		mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, (j * BPP) - fw->map->width, (fw->map->lines) * BPP);
+		j++;
+	}
 	if (fw->map->moves < 0 || fw->map->moves > 999) {
         ft_printf("El número está fuera del rango válido (0-999).\n");
         exit(1);//ESTO PODRIA FALLAR CUIDADITO.
@@ -195,12 +201,12 @@ int agregarCeros(in *fw) {
 	d = (fw->map->moves / 10) % 10;
 	u = fw->map->moves % 10;
 	if (fw->map->moves < 10){
-		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + centena), (fw->map->lines - 0.92) * BPP);
-		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + decena), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + centena), (fw->map->lines) * BPP);
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + decena), (fw->map->lines) * BPP);
 		put_number(fw, fw->map->moves, unidad);
 	}
 	if (fw->map->moves < 100){
-		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + centena), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + centena), (fw->map->lines) * BPP);
 		put_number(fw, d, decena);
 		put_number(fw, u, unidad);
 	}else{
@@ -213,23 +219,23 @@ int agregarCeros(in *fw) {
 
 void put_number(in *fw, int number, int position){
 	if (number == 0)
-		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
     else if (number == 1)
-		draw_image(fw, fw->count->one_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->one_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
     else if (number == 2)
-		draw_image(fw, fw->count->two_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->two_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
     else if (number == 3)
-		draw_image(fw, fw->count->three_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->three_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
     else if (number == 4)
-		draw_image(fw, fw->count->four_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->four_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
     else if (number == 5)
-		draw_image(fw, fw->count->five_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->five_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
     else if (number == 6)
-		draw_image(fw, fw->count->six_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->six_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
     else if (number == 7)
-		draw_image(fw, fw->count->seven_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->seven_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
 	else if (number == 8)
-		draw_image(fw, fw->count->eight_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->eight_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
 	else if (number == 9)
-		draw_image(fw, fw->count->nine_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);
+		draw_image(fw, fw->count->nine_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);
 }
