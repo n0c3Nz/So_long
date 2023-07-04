@@ -29,7 +29,7 @@ un salto de casilla a casilla voy variando sus sprites dando pasos en función d
 **•** He diseñado una función que almacena una imagen sobre otra sin pintar los píxeles de un color determinado, por lo que consigo `transparencia`
 y así las imagenes no son cargadas como bloques.
 
-**•** El juego se renderiza de una sola vez almacenando cada uno de los items del mapa en un `buffer` e imprime la imagen total de una sola vez
+**•** El juego se renderiza de una sola vez almacenando cada uno de los items del mapa en un `buffer` e imprime la imagen total
 en lugar de ir una a una lo cual podría aumentar significativamente el consumo de recursos. Tras imprimir el mapa hago uso de una función que he
 creado para dibujar imagenes con transparencia para poner a las `entity` sobre este.
 ###  Sistemas de búsqueda
