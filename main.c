@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	check_file_extension(argv[1], ".ber");
 	process_map_file(&fw);
 	fw.map->mlx = mlx_init();
-	fw.map->mlx_win = mlx_new_window(fw.map->mlx, fw.map->columns * BPP, (fw.map->lines + 1) * BPP, "Pokémon Adventures");
+	fw.map->mlx_win = mlx_new_window(fw.map->mlx, fw.map->columns * BPP, (fw.map->lines) * BPP, "Pokémon Adventures");
 	//ESTO ES PARA QUE AL DEJAR PULSADA UNA TECLA SE IDENTIFIQUE COMO VARIAS PULSACIONES// mlx_do_key_autorepeaton(fw.map->mlx);
 	mlx_process(&fw);
 	mlx_key_hook(c.mlx_win, key_hook, &fw);
