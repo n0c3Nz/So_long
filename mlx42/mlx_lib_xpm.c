@@ -1,19 +1,4 @@
-/*
-** mlx_xpm.c for minilibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Fri Dec  8 11:07:24 2000 Charlie Root
-** Last update Thu Oct  4 16:00:22 2001 Charlie Root
-*/
-
-
 #include	"mlx_int.h"
-
-
-
-
 void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
 				     int (*xpm_func)(),void *param)
 {
@@ -21,7 +6,6 @@ void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
   XImage	*img2;
   t_img		*im2;
   XpmAttributes	xpm_att;
-
   xpm_att.visual = xvar->visual;
   xpm_att.colormap = xvar->cmap;
   xpm_att.depth = xvar->depth;
@@ -31,7 +15,6 @@ void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
     return ((void *)0);
   if (img2)
     XDestroyImage(img2);
-
   if (!(im2 = (void *)mlx_new_image(xvar,img1->width,img1->height)))
     {
       XDestroyImage(img1);
@@ -64,8 +47,6 @@ void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
   im2->bpp = img1->bits_per_pixel;
   return (im2);
 }
-
-
 int	mlx_int_egal_img(XImage *img1,XImage *img2)
 {
   if (img1->width!=img2->width || img1->height!=img2->height ||
@@ -81,15 +62,11 @@ int	mlx_int_egal_img(XImage *img1,XImage *img2)
     return (0);
   return (1);
 }
-
-
 void	*mlx_xpm_file_to_image(t_xvar *xvar,char *filename,
 			       int *width,int *height)
 {
   return (mlx_int_xpm_f_image(xvar,width,height,XpmReadFileToImage,filename));
 }
-
-
 void	*mlx_xpm_to_image(t_xvar *xvar,char **data,int *width,int *height)
 {
   return (mlx_int_xpm_f_image(xvar,width,height,XpmCreateImageFromData,(void *)data));

@@ -1,5 +1,4 @@
 #include "so_long.h"
-
 int mlx_process(in *fw)
 {
 	fw->count->zero_ptr = mlx_xpm_file_to_image(fw->map->mlx, "sprites/0.xpm", &fw->count->width, &fw->count->height);
@@ -65,7 +64,6 @@ void put_item_to_buffer(in *fw, int *buffer_data, int y, int x)
     int *image_data;
     void *image_ptr = NULL;
     int bpp, size_line, endian;
-
 	if (fw->map->mapstruct[y][x] == '1')
 	 	image_ptr = fw->map->wall_ptr;
 	else if (fw->map->mapstruct[y][x] == '0')
@@ -87,7 +85,6 @@ void put_item_to_buffer(in *fw, int *buffer_data, int y, int x)
         image_data = (int *)mlx_get_data_addr(image_ptr, &bpp, &size_line, &endian);
         int cell_width = size_line / (bpp / 8);
         int cell_height = BPP;
-
         for (int row = 0; row < cell_height; row++) {
             for (int col = 0; col < cell_width; col++) {
                 int buffer_x = x * cell_width + col;
@@ -102,7 +99,6 @@ void put_item_to_buffer(in *fw, int *buffer_data, int y, int x)
 // Variables globales para el limitador de movimientos.
 clock_t lastKeyPressTime = 0;
 const int MIN_DELAY = 1000000; // 1 segundo en microsegundos
-
 int key_hook(int keycode, in *fw)
 {
 	char letra = convertirKeyCodeALetra(keycode);
@@ -144,7 +140,6 @@ char convertirKeyCodeALetra(int keycode) {
     } else
         return '\0';  // Valor nulo para indicar un error
 }
-
 int key_release(int keycode, in *fw)
 {
 	if (keycode == 0x61 || keycode == 0x41 || keycode == 0) // tecla a o A ¡EL ULTIMO ES PARA MAC!.
@@ -216,7 +211,6 @@ int agregarCeros(in *fw)
 	}
     return(0);
 }
-
 void put_number(in *fw, int number, int position){
 	if (number == 0)
 		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines) * BPP);

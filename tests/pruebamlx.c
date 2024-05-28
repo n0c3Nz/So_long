@@ -1,13 +1,9 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-
-
 typedef struct {
 char *frase[50];
-
 }fras;
-
 int main(void){
 	fras	a;
 	int count = 50;
@@ -19,7 +15,5 @@ int main(void){
 	printf("\nEl array número 39 dice %s", a.frase[38]);
 	printf("\nEl array número 50 dice %s y tiene %i carácteres", a.frase[49], strlen(a.frase[49]));
 	printf("\nEl array número 51 dice %s", a.frase[50]);
-
-
 	return(0);
 }

@@ -1,17 +1,14 @@
 #include "so_long.h"
-
 int	get_pixel_color(void	*img_ptr, int	x, int	y)
 {
     int	bpp;
     int	size_line;
     int	endian;
     char *img_data;
-
     img_data = mlx_get_data_addr(img_ptr, &bpp, &size_line, &endian);
     int	color = *(int	*)(img_data + y * size_line + x * (bpp / 8)); // color del pixel en (x,y)
     return color;
 }
-
 void	draw_image(in *fw, void	*img_ptr, int	start_x, int	start_y)
 {
     int	x;
@@ -40,19 +37,15 @@ void	draw_image(in *fw, void	*img_ptr, int	start_x, int	start_y)
         y++;
     }
 }
-
 char* put_values(char *cadena, entity *entity) {
     char *copia = ft_strdup(cadena);  // Crear una copia de la cadena original
-
     //printf("\nDEBUG do_moves:45  CARACTER DE CADENA:       %c       CADENA:        %s\n", copia[8], copia);
     copia[8] = get_low(entity->value);
     //printf("\nDEBUG do_moves:47  VALOR DE ENTITY         %c       VALOR EN MINUSCULA       %c\n", entity->value, get_low(entity->value));
     //printf("\nHOLA\n");
     //printf("\nDEBUG do_moves:49  CADENA 2:    %s\n", copia);  // DEBUG
-
     return copia;
 }
-
 char get_low(char letter)
 {
     if (letter >= 'A' && letter <= 'Z') {
@@ -161,10 +154,8 @@ void	*bucle_asincrono(void* arg) {
 		else if (entity->value == 'S')
 			usleep(40000);
 	}
-	
 	entity->x += coordx;
 	entity->y += coordy;
-	
 	mlx_put_image_to_window(fw->map->mlx, fw->map->mlx_win, fw->map->floor_ptr, entity->x * BPP, entity->y * BPP);//Pone un suelo en la nueva coordenada
 	entity->ptr = mlx_xpm_file_to_image(fw->map->mlx, getdirectionstatic(entity, coordx, coordy), &fw->map->width, &fw->map->height);//CARGA LA DIRECCION ESTATICA DEL JUGADOR.
 	draw_image(fw, entity->ptr, entity->x * BPP, entity->y * BPP);//Dibuja el paso estatico
@@ -174,7 +165,6 @@ void	*bucle_asincrono(void* arg) {
 	pthread_exit(NULL);
 	return NULL;
 }
-
 void	handlemove(in *fw, entity *entity, int	coordx, int	coordy)
 {
 	if (entity->iswalking || (coordx == 0 && coordy == 0 && entity->iswalking)){
@@ -189,16 +179,11 @@ void	handlemove(in *fw, entity *entity, int	coordx, int	coordy)
     temporal->coordx = coordx;
     temporal->coordy = coordy;
 	pthread_t hilo;
-
     pthread_create(&hilo, NULL, bucle_asincrono, (void*)temporal);
  	pthread_detach(hilo);
 	//printf("Hola desde el hilo principal\n");
 	//moveEnemyTowardsPlayer(fw, fw->snorlax, fw->player);
 }
-
-
-/*ESTO ES EL TIMER DE LA ANIMACION*/
-
 int	timer(clock_t inicio, double tiempo_deseado)
 {
 	clock_t actual = clock();
@@ -211,13 +196,10 @@ int	timer(clock_t inicio, double tiempo_deseado)
 	inicio = clock();
 	return(inicio);
 }
-
-/*TIMER PARA DETERMINAR EL INTERVALO DE LOS MOVIMIENTOS DEL JUGADOR*/
 int	hasEnoughTimeElapsed(void)
 {
     clock_t currentTime = clock();
     double elapsed = (double)(currentTime - lastKeyPressTime) / CLOCKS_PER_SEC;
-
     if (elapsed >= 0.0001)
     {
         lastKeyPressTime = currentTime;
@@ -225,8 +207,6 @@ int	hasEnoughTimeElapsed(void)
     }
     return 0; // No ha pasado suficiente tiempo
 }
-
-
 void	draw_counter(in *fw, void	*img_ptr, int	start_x, int	start_y)
 {
     int	x;

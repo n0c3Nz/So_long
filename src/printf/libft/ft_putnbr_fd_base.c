@@ -1,23 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd_base.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: guortun- <guortun-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/08 11:08:22 by guortun-          #+#    #+#             */
-/*   Updated: 2023/02/08 12:33:15 by guortun-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
-
 void	ft_putnbr_fd_base(int n, int fd, char *base)
 {
 	long	m;
 	char	str;
 	int		base_size;
-
 	m = (long)n;
 	base_size = 0;
 	base_size = ft_strlen(base);

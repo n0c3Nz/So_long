@@ -1,32 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: guortun- <guortun-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 17:22:24 by guortun-          #+#    #+#             */
-/*   Updated: 2023/03/29 17:22:30 by guortun-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line_bonus.h"
-
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
-
 	i = 0;
 	while (s[i] != '\0')
 		i++;
 	return (i);
 }
-
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	char	*dst_aux;
 	char	*src_aux;
-
 	if (!dst && !src)
 		return (NULL);
 	dst_aux = (char *)dst;
@@ -40,11 +24,9 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	}
 	return (dst);
 }
-
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*s;
-
 	if (!s1 || !s2)
 		return (NULL);
 	s = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
@@ -57,12 +39,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	s1 = NULL;
 	return (s);
 }
-
 char	*realloc_buffer(char *ptr, size_t l1, size_t l2)
 {
 	char		*aux;
 	size_t		l;
-
 	if (l1 < l2)
 		l = l2 - l1 + 1;
 	if (l2 <= l1)
@@ -76,12 +56,10 @@ char	*realloc_buffer(char *ptr, size_t l1, size_t l2)
 	ptr = NULL;
 	return (aux);
 }
-
 void	*ft_calloc(size_t count, size_t size)
 {
 	char	*ptr;
 	size_t	i;
-
 	if (size && count && (count > SIZE_MAX / size))
 		return (NULL);
 	ptr = malloc(count * size);

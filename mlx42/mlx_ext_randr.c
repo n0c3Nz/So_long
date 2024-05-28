@@ -1,16 +1,7 @@
-
-
-
 #include	"mlx_int.h"
-
 #include	<unistd.h>
 #include <X11/extensions/Xrandr.h>
-
-/* global for independant extension */
-
 RRMode	saved_mode = 0;
-
-
 int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
 {
   XWindowAttributes	watt;
@@ -22,10 +13,8 @@ int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
   RRMode		mode_candidate;
   int			idx_output;
   int			idx_candidate;
-
   if (!XGetWindowAttributes(xvar->display, win->window, &watt))
     return (0);
-
   res = XRRGetScreenResources(xvar->display, xvar->root);
   o_info = NULL;
   idx_output = -1;
@@ -46,7 +35,6 @@ int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
       XRRFreeScreenResources(res);
       return (0);
     }
-  
   idx_candidate = -1;
   i = o_info->nmode;
   while (i--)
@@ -66,24 +54,20 @@ int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
       return (0);
     }
   if (!fullscreen && saved_mode == -1)
-    idx_candidate = 0; /* if no clue, uses first mode, usually part of npreferred */
+    idx_candidate = 0; 
   mode_candidate = o_info->modes[idx_candidate];
   if (!fullscreen)
     mode_candidate = saved_mode;
-
   crtc = XRRGetCrtcInfo(xvar->display, res, o_info->crtc);
   saved_mode = crtc->mode;
-
   i = XRRSetCrtcConfig(xvar->display, res, o_info->crtc, CurrentTime, 0, 0, mode_candidate,
 		       crtc->rotation, &res->outputs[idx_output], 1);
   if (fullscreen)
     printf("found mode : %d x %d\n Status %d\n", res->modes[idx_candidate].width, res->modes[idx_candidate].height, i);
   else
     printf("back previous mode\n");
-  
   XMoveWindow(xvar->display, win->window, 0, 0);
   XMapRaised(xvar->display, win->window);
-
   if (fullscreen)
     {
       //      XGrabPointer(xvar->display, win->window, True, 0, GrabModeAsync, GrabModeAsync, win->window, 0L, CurrentTime);
@@ -94,10 +78,8 @@ int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
       XUngrabPointer(xvar->display, CurrentTime);
       XUngrabKeyboard(xvar->display, CurrentTime);
     }
-
   XSync(xvar->display, False);
   sleep(1);
-
   XRRFreeCrtcInfo(crtc);
   XRRFreeOutputInfo(o_info);
   XRRFreeScreenResources(res);

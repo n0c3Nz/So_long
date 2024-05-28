@@ -5,10 +5,8 @@
 //
 // include opengl needed before mlx_int.h
 //
-
 #import <Cocoa/Cocoa.h>
 #import "mlx_int.h"
-
 @interface NSWindowEvent : NSWindow
 {
   func_t	event_funct[MAX_EVENT];
@@ -24,24 +22,19 @@
 - (void) exposeNotification:(NSNotification *)note;
 - (void) closeNotification:(NSNotification *)note;
 @end
-
-
 @interface MlxWin : NSOpenGLView
 {
   NSWindowEvent		*win;
   NSOpenGLContext	*ctx;
   glsl_info_t		glsl;
   int			openglwin;
-
   int			size_x;
   int			size_y;
-
   int			pixel_nb;
   GLuint		pixel_vbuffer;
   GLuint		pixel_texture;
   unsigned int		*pixtexbuff;
 }
-
 - (id) initWithRect: (NSRect)rect andTitle: (NSString *)title pfaAttrs: (NSOpenGLPixelFormatAttribute *)attrs;
 - (void) selectGLContext;
 - (void) flushGLContext;

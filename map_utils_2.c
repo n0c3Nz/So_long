@@ -1,5 +1,4 @@
 #include "so_long.h"
-
 int	last_line_analyzer(char	*buffer, in *fw)
 {
 	int	a;
@@ -20,11 +19,9 @@ int	last_line_analyzer(char	*buffer, in *fw)
 	}
 	return(0);
 }
-
 int	path_finder(in *fw)
 {
     int	i;
-	
 	i = 0;
 	int	**visited = (int **)ft_calloc(fw->map->lines, sizeof(int	*));
     while(i < fw->map->lines)
@@ -37,7 +34,6 @@ int	path_finder(in *fw)
         printf("\nHay un camino posible desde 'P' a 'E'.\n");
 	else
         printf("\nNo hay un camino posible desde 'P' a 'E'.\n");
-
 // Liberar la memoria de la matriz
 	i = 0;
 	while(i < fw->map->lines){

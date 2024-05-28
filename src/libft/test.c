@@ -6,7 +6,6 @@
 #include <errno.h>
 #include <string.h>
 #include "libft.h"
-
 // https://opensource.apple.com/source/Libc/Libc-825.25/string/strlcat.c.auto.html
 size_t strlcat(char * dst, const char * src, size_t maxlen) {
     const size_t srclen = strlen(src);
@@ -20,7 +19,6 @@ size_t strlcat(char * dst, const char * src, size_t maxlen) {
     }
     return dstlen + srclen;
 }
-
 // https://opensource.apple.com/source/Libc/Libc-825.25/string/strlcpy.c.auto.html
 size_t strlcpy(char * dst, const char * src, size_t maxlen) {
     const size_t srclen = strlen(src);
@@ -32,12 +30,10 @@ size_t strlcpy(char * dst, const char * src, size_t maxlen) {
     }
     return srclen;
 }
-
 // https://github.com/lattera/freebsd/blob/master/lib/libc/string/strnstr.c
 char *strnstr(const char *s, const char *find, size_t slen) {
 	char c, sc;
 	size_t len;
-
 	if ((c = *find++) != '\0') {
 		len = strlen(find);
 		do {
@@ -52,23 +48,18 @@ char *strnstr(const char *s, const char *find, size_t slen) {
 	}
 	return ((char *)s);
 }
-
 int	min(int a, int b) {
 	return ((a < b) ? a : b);
 }
-
 int	max(int a, int b) {
 	return ((a > b) ? a : b);
 }
-
 int	same_sign(int a, int b) {
 	return ((a < 0 && b < 0) || (a > 0 && b > 0));
 }
-
 void test_char_ft(int (*org)(int), int (*ft)(int)) {
 	int	i;
 	int	ret_o, ret_y;
-
 	printf("[int|unsigned char|expected|yours]\n");
 	i = 0;
 	while (i < 256) {
@@ -84,34 +75,25 @@ void test_char_ft(int (*org)(int), int (*ft)(int)) {
 	}
 	printf("\n");
 }
-
 char strupper_and_one(unsigned int idx, char c) {
 	if (idx == 0) {
 		return ('1');
 	}
 	return (ft_toupper(c));
 }
-
 int	_c_in_set(char c, char const *set) {
 	int	i;
-
 	i = 0;
 	while (set[i])
 		if ((unsigned char)set[i++] == (unsigned char)c)
 			return (1);
 	return (0);
 }
-
 int main(int argc, char const *argv[]) {
 	int	j;
 	(void) argc;
 	(void) argv;
-
-	/*
-	atoi
-	*/
 	printf("---atoi---[string|atoi|yours]\n");
-
 	int i = 1;
 	while (i < argc) {
 		if (atoi(argv[i]) == ft_atoi((char*) argv[i])) {
@@ -122,16 +104,10 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	bzero
-	*/
 	printf("\n---bzero---[string|length]\n");
-
 	char *str_bzero_org = NULL;
 	char *str_bzero_ft = NULL;
 	int	min_length;
-
 	i = 0;
 	while (i < argc) {
 		str_bzero_org = strdup(argv[i]);
@@ -148,15 +124,9 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	calloc
-	*/
 	printf("\n---calloc---[string|checked|length]\n");
-
 	char	*str_calloc = NULL;
 	int		length = 0;
-
 	i = 0;
 	while (i < argc) {
 		length = strlen(argv[i]) + 1;
@@ -179,31 +149,17 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	is_
-	*/
-
 	printf("\n---isalnum---");
 	test_char_ft(&isalnum, &ft_isalnum);
-
 	printf("\n---isalpha---");
 	test_char_ft(&isalpha, &ft_isalpha);
-
 	printf("\n---isascii---");
 	test_char_ft(&isascii, &ft_isascii);
-
 	printf("\n---isdigit---");
 	test_char_ft(&isdigit, &ft_isdigit);
-
 	printf("\n---isprint---");
 	test_char_ft(&isprint, &ft_isprint);
-
-	/*
-	itoa
-	*/
 	printf("\n---itoa---[number|sprintf|yours]\n");
-
 	long	test_itoa[50] = { 0, 1, -1, 12, 21, -21, -12, 2147483999, -2147483999, 123456, -123456, 2147483648, -2147483648, 2147483647, -2147483647 };
 	i = 0;
 	char *str_itoa = NULL;
@@ -220,12 +176,7 @@ int main(int argc, char const *argv[]) {
 		free(str_itoa);
 	}
 	printf("\n");
-
-	/*
-	memccpy
-	*/
 	printf("\n---memccpy---[string|memccpy|yours]\n");
-
 	int memccpy_length = 0;
 	char	str_dest[250] = "";
 	char	str_ft_dest[250] = "";
@@ -242,12 +193,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	memchr
-	*/
 	printf("\n---memchr---[string|memchr|yours]\n");
-
 	i = 0;
 	while (i < argc) {
 		if (memchr(argv[i], 'c', 50) == ft_memchr(argv[i], 'c', 50)) {
@@ -258,12 +204,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	memcmp
-	*/
 	printf("\n---memcmp---[string|comparison|memcmp|yours]\n");
-
 	i = 0;
 	while (i < argc) {
 		if (memcmp(argv[i], argv[i], 50) == ft_memcmp(argv[i], argv[i], 50)) {
@@ -279,12 +220,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	memcpy
-	*/
 	printf("\n---memcpy---[string|memcpy|yours]\n");
-
 	int memcpy_length = 0;
 	i = 0;
 	while (i < argc) {
@@ -299,12 +235,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	memmove
-	*/
 	printf("\n---memmove---[string|memmove|yours]\n");
-
 	int memmove_length = 0;
 	i = 0;
 	while (i < argc) {
@@ -319,12 +250,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	memset
-	*/
 	printf("\n---memset---[char|memset|yours]\n");
-
 	i = 0;
 	while (i < argc) {
 		memset(str_dest, argv[i][0], 50);
@@ -337,17 +263,11 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	split
-	*/
 	printf("\n---split (`e.wu-+ `)---[char|string][length|split_length|sep_count|string]\n");
-
 	char to_split[10] = {'e', '.', 'w', 'u', '-', '+', ' ', '0', '2', '1'};
 	char **splitted = NULL;
 	int	k, l;
 	int	out_length, total_length, sep_count;
-
 	i = 0;
 	while (i < argc) {
 		k = 0;
@@ -387,12 +307,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strchr
-	*/
 	printf("\n---strchr---[string|strchr|yours]\n");
-
 	i = 0;
 	while (i < argc) {
 		if (strchr(argv[i], 'c') == ft_strchr(argv[i], 'c')) {
@@ -403,12 +318,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strdup
-	*/
 	printf("\n---strdup---[string|strdup|yours]\n");
-
 	char	*str_dup_org = NULL;
 	char	*str_dup_ft = NULL;
 	i = 0;
@@ -425,12 +335,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strjoin
-	*/
 	printf("\n---strjoin---[string|asprintf|yours]\n");
-
 	char	str_join_org[1024];
 	char	*str_join_ft = NULL;
 	i = 0;
@@ -446,18 +351,12 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strlcat
-	*/
 	printf("\n---strlcat---[string|strlcat|yours]\n");
 	printf("\n---Unreliable results...\n");
-
 	char str_lcat_org[2550] = "";
 	int res_org = 0;
 	char str_lcat_ft[2550] = "";
 	int res_ft = 0;
-
 	i = 0;
 	while (i < argc) {
 		res_org = strlcat(str_lcat_org, argv[i], 5);
@@ -475,15 +374,9 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strlcpy
-	*/
 	printf("\n---strlcpy---[string|strlcpy|yours]\n");
-
 	char str_lcpy_org[2550] = "";
 	char str_lcpy_ft[2550] = "";
-
 	i = 0;
 	while (i < argc) {
 		res_org = strlcpy(str_lcpy_org, argv[i], 5);
@@ -501,12 +394,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strlen
-	*/
 	printf("\n---strlen---[string|strlen|yours]\n");
-
 	i = 0;
 	while (i < argc) {
 		if (strlen(argv[i]) == ft_strlen(argv[i])) {
@@ -517,15 +405,9 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strmapi
-	*/
 	printf("\n---strmapi---[string|yours]\n");
-
 	char *str_mapi_ft = NULL;
 	int all_upper;
-
 	i = 0;
 	while (i < argc) {
 		str_mapi_ft = ft_strmapi(argv[i], &strupper_and_one);
@@ -546,14 +428,9 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strncmp
-	*/
 	printf("\n---strncmp---[string|strncmp|yours]\n");
 	int	ncmp_ret;
 	int	nft_cmp_ret;
-
 	i = 0;
 	while (i < argc) {
 		ncmp_ret = strncmp(argv[i], argv[i], 50);
@@ -563,7 +440,6 @@ int main(int argc, char const *argv[]) {
 		} else {
 			printf("[%s|%d|%d]", argv[i], ncmp_ret, nft_cmp_ret);
 		}
-
 		ncmp_ret = strncmp(argv[i], argv[argc - 1], 50);
 		nft_cmp_ret = ft_strncmp(argv[i], argv[argc - 1], 50);
 		if (ncmp_ret == nft_cmp_ret || same_sign(ncmp_ret, nft_cmp_ret)) {
@@ -574,12 +450,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strnstr
-	*/
 	printf("\n---strnstr---[string|strnstr|yours]\n");
-
 	i = 0;
 	while (i < argc) {
 		if (strnstr(argv[i], argv[i], 50) == ft_strnstr(argv[i], argv[i], 50)) {
@@ -605,12 +476,7 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strrchr
-	*/
 	printf("\n---strrchr---[string|strrchr|yours]\n");
-
 	i = 0;
 	while (i < argc) {
 		if (strrchr(argv[i], 'c') == ft_strrchr(argv[i], 'c')) {
@@ -621,15 +487,9 @@ int main(int argc, char const *argv[]) {
 		i++;
 	}
 	printf("\n");
-
-	/*
-	strtrim
-	*/
 	printf("\n---strtrim (` .+-e`)---[where|string|yours]\n");
-
 	char set[10] = " .+-e103*";
 	char *str_trim = NULL;
-
 	i = 0;
 	while (i < argc) {
 		str_trim = ft_strtrim(argv[i], " .+-e10");
@@ -642,7 +502,6 @@ int main(int argc, char const *argv[]) {
 				printf("G");
 			else
 				printf("[start:%s|%s]", argv[i], str_trim);
-
 			j = max(0, strlen(argv[i]) - 1);
 			while (j >= 0 && _c_in_set(argv[i][j], set))
 				j--;
@@ -675,7 +534,6 @@ int main(int argc, char const *argv[]) {
 					printf("G");
 				else
 					printf("[start:%s|%s]", argv[i], str_trim);
-
 				j = max(0, strlen(argv[i]) - 1);
 				while (j >= 0 && _c_in_set(argv[i][j], tmp_set))
 					j--;
@@ -693,16 +551,10 @@ int main(int argc, char const *argv[]) {
 		set_ct++;
 	}
 	printf("\n");
-
-	/*
-	substr
-	*/
 	printf("\n---substr---[original|yours|strncpy|start|length]\n");
-
 	char *str_substr = NULL;
 	char *str_substr_org = NULL;
 	int argv_length;
-
 	str_substr_org = (char*)malloc(sizeof(*str_substr_org) * 500);
 	i = 0;
 	while (i < argc) {
@@ -732,21 +584,11 @@ int main(int argc, char const *argv[]) {
 	}
 	free(str_substr_org);
 	printf("\n");
-
-	/*
-	to_
-	*/
 	printf("\n---tolower---");
 	test_char_ft(&tolower, &ft_tolower);
-
 	printf("\n---toupper---");
 	test_char_ft(&toupper, &ft_toupper);
-
-	/*
-	ft_*_fd
-	*/
 	printf("\n---fd_functions---\n");
-
 	int	fd = open("test_user_fd", O_RDWR | O_TRUNC | O_CREAT);
 	if (fd < 0) {
 		printf("open error %d %s\n", errno, strerror(errno));
@@ -777,6 +619,5 @@ int main(int argc, char const *argv[]) {
 		ft_putchar_fd('\n', fd);
 	}
 	close(fd);
-
 	return (0);
 }

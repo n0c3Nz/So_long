@@ -1,17 +1,12 @@
 #include "so_long.h"
-
 int	moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
-
 	int	dx = player->x - enemy->x;
     int	dy = player->y - enemy->y;
-
     // Calcular la distancia euclidiana entre el enemigo y el jugador
     double distance = sqrt(dx*dx + dy*dy);
-
     // Normalizar el vector de dirección hacia el jugador
     double directionX = dx / distance;
     double directionY = dy / distance;
-
 	int	posx = 0;
 	int	posy = 0;
     // Mover el enemigo en la dirección del jugador
@@ -26,7 +21,6 @@ int	moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player) {
             posx += (int)round(directionX);
         }
     }
-
     // Si la nueva dirección también es un obstáculo o movimiento en diagonal, buscar otra dirección
 	if (iswall(fw, enemy, posx, posy) || (posx != 0 && posy != 0)) {
 		posx = posy == 0 ? (getRandomBoolean() ? 1 : -1) : 0;

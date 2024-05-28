@@ -1,9 +1,3 @@
-/*
-** This is a generated file with rgb2c.pl and rgb.txt from
-** the XFree86 distribution.
-*/
-
-
 struct s_col_name mlx_col_name[] =
 {
  { "snow" , 0xfffafa },

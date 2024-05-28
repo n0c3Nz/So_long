@@ -1,24 +1,10 @@
-/*
-** mlx_int_str_to_wordtab.c for MinilibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Wed Sep 13 11:36:09 2000 Charlie Root
-** Last update Fri Dec 14 11:02:09 2001 Charlie Root
-*/
-
-
 #include	"mlx_int.h"
-
-
 int	mlx_int_str_str(char *str,char *find,int len)
 {
   int	len_f;
   int	pos;
   char	*s;
   char	*f;
-
   len_f = strlen(find);
   if (len_f>len)
     return (-1);
@@ -35,9 +21,6 @@ int	mlx_int_str_str(char *str,char *find,int len)
     }
   return (-1);
 }
-
-
-
 int	mlx_int_str_str_cote(char *str,char *find,int len)
 {
   int	len_f;
@@ -45,7 +28,6 @@ int	mlx_int_str_str_cote(char *str,char *find,int len)
   char	*s;
   char	*f;
   int	cote;
-
   len_f = strlen(find);
   if (len_f>len)
     return (-1);
@@ -68,15 +50,12 @@ int	mlx_int_str_str_cote(char *str,char *find,int len)
     }
   return (-1);
 }
-
-
 char	**mlx_int_str_to_wordtab(char *str)
 {
   char	**tab;
   int	pos;
   int	nb_word;
   int	len;
-
   len = strlen(str);
   nb_word = 0;
   pos = 0;

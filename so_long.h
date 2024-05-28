@@ -1,6 +1,5 @@
 #ifndef SO_LONG_H
 #define SO_LONG_H
-
 #include <mlx.h>
 #include "./src/libft/libft.h"
 //#include "./src/get_next_line/get_next_line.h"
@@ -53,7 +52,6 @@ typedef struct{
 	clock_t env_animation;//parte bonus
 	int is_w_pressed;
 }map;
-
 typedef struct{
 	void *ptr;
 	int width;
@@ -88,7 +86,6 @@ typedef struct{
 	int widthmove;
 	int heightmove;
 }counter;
-
 typedef struct {
 	map *map;
 	entity *player;
@@ -97,22 +94,15 @@ typedef struct {
 	counter *count;
 	// Agrega aquí todas las variables que necesitas
 } in;
-
 typedef struct {
 	in *tempfw;
 	entity *tempentity;
 	int coordx;
 	int coordy;
 } tempcajon;
-
-/*FUNCIONES PRINTF*/
 int	ft_printf(const char *fmt, ...);
-/*FUNCIONES LIBFT*/
 void ft_putstr_fd(char *s, int fd);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-/*FUNCION GET_NEXT_LINE*/
-/*char *get_next_line(int fd);*/
-/*FUNCIONES DE MAPA*/
 void check_argc(int argc);
 int check_file_extension(char *filename, char *extension);
 int process_map_file(in *fw);
@@ -127,7 +117,6 @@ int last_line_analyzer(char *buffer, in *fw);
 int search_items(char item, in *fw);
 int path_finder(in *fw);
 int dfs(int row, int col, int **visited, in *fw);
-/*FUNCIONES DE GESTION DE GRÁFICOS*/
 int mlx_process(in *fw);
 void put_imgs(in *fw);
 int key_hook(int keycode, in *fw);
@@ -137,12 +126,9 @@ void wall_animation(in *fw);
 void coin_animation(in *fw);
 void check_coins(in *fw);
 void draw_image(in *fw, void *img_ptr, int start_x, int start_y);
-/*FUNCIONES DE GESTION DE MOVIMIENTOS*/
 int check_e(in *fw);
-/*FUNCIONES DE GESTIÓN DE ERRORES*/
 void perror(const char *s);
 char *strerror(int errnum);
-/*EXATRON*/
 int get_pixel_color(void *img_ptr, int x, int y);
 void handlemove(in *fw, entity *entity, int coordx, int coordy);
 int handlekeys(in *fw, char key);
@@ -157,7 +143,6 @@ void initplayer(in *fw, entity *entity, int coordx, int coordy);
 char convertirKeyCodeALetra(int keycode);
 int timer(clock_t inicio, double tiempo_deseado);
 int hasEnoughTimeElapsed(void);
-/*BUSQUEDA A* */
 int moveEnemyTowardsPlayer(in *fw, entity *enemy, entity *player);
 char* put_values(char *cadena, entity *entity);
 char get_low(char letter);

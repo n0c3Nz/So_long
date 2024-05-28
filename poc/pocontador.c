@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 char* agregarCeros(in *fw) {
     char* resultado[4];
 	if (fw->map->moves < 0 || fw->map->moves > 999) {
@@ -8,7 +7,6 @@ char* agregarCeros(in *fw) {
         resultado[0] = '\0';  // Establecer el resultado como una cadena vacía
         exit();//ESTO PODRIA FALLAR CUIDADITO.
     }
-
     if (fw->map->moves < 10) {
 		draw_image(fw, fw->map->zero_ptr, 80, (fw->map->lines - 1) * BPP);
 		draw_image(fw, fw->map->coin_ptr, 100, (fw->map->lines - 1) * BPP);
@@ -37,19 +35,14 @@ char* agregarCeros(in *fw) {
     } else {
         sprintf(resultado, "%d", fw->map->moves);
     }
-
     return resultado;
 }
-
 int main() {
     int fw->map->moves;
     char resultado[4];
-
     char* valor = agregarCeros(fw->map->moves, resultado);
-
     if (valor[0] != '\0') {
         printf("Resultado: %s\n", valor);
     }
-
     return 0;
 }

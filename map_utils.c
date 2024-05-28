@@ -1,5 +1,4 @@
 #include "so_long.h"
-
 void check_argc(int argc)
 {
 	if (argc < 2)

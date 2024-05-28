@@ -1,6 +1,3 @@
-
-
-
 int funcion(in *fw){
 	int unidad, centena, decena;
 	unidad = 96;
@@ -21,7 +18,6 @@ int funcion(in *fw){
 		put_number(fw, fw->map->moves / 100, unidad)
 	}
 }
-
 void put_number(in *fw, int number, int x, int position){
 	if (number == 0)
 		draw_image(fw, fw->count->zero_ptr, (fw->map->columns * BPP / 2 + position), (fw->map->lines - 0.92) * BPP);

@@ -1,10 +1,8 @@
 #include "so_long.h"
-
 int handlekeys(in *fw, char key)
 {	
 	int coordX;
 	int coordY;
-
 	coordX = 0;
 	coordY = 0;
 	if (key == 'a')
@@ -17,7 +15,6 @@ int handlekeys(in *fw, char key)
 		coordY = -1;
 	return (check_move(fw, coordX, coordY));
 }
-
 int check_move(in *fw, int coordX, int coordY)
 {
 	//ft_printf("\nVALOR DE LA SIGUIENTE CASILLA: %c\n",fw->map->mapstruct[fw->player->y + coordY][fw->player->x + coordX]);//  DEBUG
@@ -40,7 +37,6 @@ int check_move(in *fw, int coordX, int coordY)
 	}
 	return(1);
 }
-
 int check_e(in *fw){
 	if (fw->player->y == fw->map->exit_y && fw->player->x == fw->map->exit_x)
 	{

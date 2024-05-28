@@ -5,20 +5,12 @@
 //
 // include opengl needed before mlx_int.h
 //
-
-
 #define	MAX_EVENT	32
 #define MAX_PIXEL_NB	200000
 #define UNIQ_BPP	4
-
 #define FONT_WIDTH	10
 #define	FONT_HEIGHT	20
-
-
 typedef int (*func_t)();
-
-/* structs */
-
 typedef struct	glsl_info_s
 {
   GLuint	pixel_vshader;
@@ -27,7 +19,6 @@ typedef struct	glsl_info_s
   GLint		loc_pixel_position;
   GLint		loc_pixel_texture;
   GLint		loc_pixel_winhalfsize;
-
   GLuint	image_vshader;
   GLuint	image_fshader;
   GLuint	image_program;
@@ -36,7 +27,6 @@ typedef struct	glsl_info_s
   GLint		loc_image_texture;
   GLint		loc_image_pos;
   GLint		loc_image_size;
-
   GLuint	font_vshader;
   GLuint	font_fshader;
   GLuint	font_program;
@@ -48,8 +38,6 @@ typedef struct	glsl_info_s
   GLint		loc_font_posinatlas;
   GLint		loc_font_atlassize;
 } glsl_info_t;
-
-
 typedef struct	mlx_img_list_s
 {
   int			width;
@@ -58,8 +46,6 @@ typedef struct	mlx_img_list_s
   GLfloat		vertexes[8];
   struct mlx_img_list_s	*next;
 } mlx_img_list_t;
-
-
 typedef struct	mlx_img_ctx_s
 {
   GLuint		texture;
@@ -67,7 +53,6 @@ typedef struct	mlx_img_ctx_s
   mlx_img_list_t	*img;
   struct mlx_img_ctx_s	*next;
 } mlx_img_ctx_t;
-
 typedef struct	mlx_win_list_s
 {
   void			*winid;
@@ -76,8 +61,6 @@ typedef struct	mlx_win_list_s
   int			pixmgt;
   struct mlx_win_list_s	*next;
 } mlx_win_list_t;
-
-
 typedef struct		mlx_ptr_s
 {
   void			*appid;
@@ -89,9 +72,7 @@ typedef struct		mlx_ptr_s
   mlx_img_list_t	*font;
   int			main_loop_active;
 } mlx_ptr_t;
-
 // proto
-
 int	mlx_shaders(glsl_info_t *glsl);
 char    **mlx_int_str_to_wordtab(char *str);
 int     mlx_int_str_str(char *str,char *find,int len);

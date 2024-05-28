@@ -1,15 +1,7 @@
-
-
-
 #include "mlx.h"
-
-
 void *mlx;
 void *win1;
 void *win2;
-
-
-
 int gere_mouse(int x,int y,int button,void*toto)
 {
   printf("Mouse event - new win\n");
@@ -17,8 +9,6 @@ int gere_mouse(int x,int y,int button,void*toto)
   win1 = mlx_new_window(mlx,random()%500,random()%500,"new win");
   mlx_mouse_hook(win1,gere_mouse,0);
 }
-
-
 int main()
 {
   srandom(time(0));

@@ -5,7 +5,6 @@ int check_file_extension(char *filename, char *extension)
     size_t len_extension;
     len_filename = ft_strlen(filename);
     len_extension = ft_strlen(extension);
-
 	if (len_filename < len_extension)
 	{
 		perror("Fichero no válido");
@@ -28,7 +27,6 @@ int line_counter(int fd)
 	int	line;
     ssize_t bytes_read;
 	int i;
-	
 	i = 0;
 	line = 0;
     while ((bytes_read = read(fd, &buffer[i], 1)) > 0)
@@ -52,7 +50,6 @@ int line_counter(int fd)
 int map_validator(char *buffer, in *fw)
 {
 	static int i;
-
 	if (i == 0 && i < fw->map->lines)
 	{
 		first_line_analyzer(buffer, fw);
@@ -72,13 +69,11 @@ int map_validator(char *buffer, in *fw)
 	}
 	return(0);
 }
-
 int process_line(int fd, in *fw)
 {
     char buffer[BUFFER_SIZE];
     ssize_t bytes_read;
 	int i;
-
 	i = 0;
     while ((bytes_read = read(fd, &buffer[i], 1)) > 0)
     {
@@ -94,7 +89,6 @@ int process_line(int fd, in *fw)
     }
     return(0);
 }
-
 int process_map_file(in *fw)
 {
 	int fd = open(fw->map->map_name, O_RDONLY);

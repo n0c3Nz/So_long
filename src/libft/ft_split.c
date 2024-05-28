@@ -1,24 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ncolomer <ncolomer@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 15:38:59 by ncolomer          #+#    #+#             */
-/*   Updated: 2019/10/11 18:07:44 by ncolomer         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
-
 static char
 	**ft_alloc_split(char const *s, char c)
 {
 	size_t	i;
 	char	**split;
 	size_t	total;
-
 	i = 0;
 	total = 0;
 	while (s[i])
@@ -32,12 +18,10 @@ static char
 		return (NULL);
 	return (split);
 }
-
 void
 	*ft_free_all_split_alloc(char **split, size_t elts)
 {
 	size_t	i;
-
 	i = 0;
 	while (i < elts)
 	{
@@ -47,7 +31,6 @@ void
 	free(split);
 	return (NULL);
 }
-
 static void
 	*ft_split_range(char **split, char const *s,
 		t_split_next *st, t_split_next *lt)
@@ -58,14 +41,12 @@ static void
 	lt->length++;
 	return (split);
 }
-
 static void
 	*ft_split_by_char(char **split, char const *s, char c)
 {
 	size_t			i;
 	t_split_next	st;
 	t_split_next	lt;
-
 	i = 0;
 	lt.length = 0;
 	lt.start = 0;
@@ -88,12 +69,10 @@ static void
 	split[lt.length] = 0;
 	return (split);
 }
-
 char
 	**ft_split(char const *s, char c)
 {
 	char	**split;
-
 	if (!(split = ft_alloc_split(s, c)))
 		return (NULL);
 	if (!ft_split_by_char(split, s, c))

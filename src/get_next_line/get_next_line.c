@@ -1,21 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: guortun- <guortun-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 17:22:53 by guortun-          #+#    #+#             */
-/*   Updated: 2023/03/29 17:22:55 by guortun-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
-
 ssize_t	find_nl(char *ptr)
 {
 	ssize_t	i;
-
 	i = 0;
 	while (ptr[i] != '\0')
 	{
@@ -25,11 +11,9 @@ ssize_t	find_nl(char *ptr)
 	}
 	return (i);
 }
-
 char	*ft_getline(char *buffer, ssize_t size)
 {
 	char	*line;
-
 	if (ft_strlen(buffer) == 0)
 		return (NULL);
 	line = (char *)ft_calloc(size + 2, sizeof(char));
@@ -39,13 +23,11 @@ char	*ft_getline(char *buffer, ssize_t size)
 	line = ft_memcpy(line, buffer, size + 1);
 	return (line);
 }
-
 char	*fill_buffer(int fd, char *buffer)
 {
 	ssize_t		nr;
 	ssize_t		nl;
 	char		*ptr;
-
 	ptr = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!ptr)
 		return (NULL);
@@ -68,12 +50,10 @@ char	*fill_buffer(int fd, char *buffer)
 	ptr = NULL;
 	return (buffer);
 }
-
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*line;
-
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	if (!buffer)
